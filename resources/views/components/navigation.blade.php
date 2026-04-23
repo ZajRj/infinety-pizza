@@ -27,10 +27,26 @@
                     <span class="absolute -top-2 -right-2 bg-brand-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
                 </a>
 
-                <!-- User -->
-                <a href="{{ auth()->check() ? '/admin' : '/login' }}" class="text-gray-700 hover:text-brand-primary transition-colors">
-                    @svg('far-user-circle', ['class' => 'w-5 h-5'])
-                </a>
+                @auth
+                    @if(auth()->user()->is_admin)
+                        <a href="/admin" class="hidden lg:block text-[10px] font-black text-tertiary uppercase tracking-widest hover:opacity-70 transition-opacity">
+                            Admin
+                        </a>
+                    @endif
+                    <a href="{{ route('profile') }}" class="text-[10px] font-black text-gray-900 uppercase tracking-widest hover:text-primary transition-colors">
+                        Profile
+                    </a>
+                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                        @csrf
+                        <button type="submit" class="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-primary transition-colors">
+                            Logout
+                        </button>
+                    </form>
+                @else
+                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-brand-primary transition-colors">
+                        @svg('far-user-circle', ['class' => 'w-5 h-5'])
+                    </a>
+                @endauth
 
                 <!-- Order Button -->
                 <a href="{{ route('home') }}#menu" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
