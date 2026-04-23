@@ -1,31 +1,40 @@
 <nav x-data="{ mobileMenuOpen: false }" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
-            
+
             <!-- Left: Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                     <span class="text-xl font-bold text-brand-primary tracking-tight font-heading uppercase italic">
-                        Infinety <span class="text-gray-900 group-hover:text-brand-primary transition-colors not-italic">Pizza</span>
+                        Infinety <span
+                            class="text-gray-900 group-hover:text-brand-primary transition-colors not-italic">Pizza</span>
                     </span>
                 </a>
             </div>
 
             <!-- Center: Navigation Links (Desktop) -->
             <div class="hidden md:flex items-center justify-center space-x-10 flex-1 px-8">
-                <a href="{{ route('home') }}#hero" data-nav-link="hero" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Home</a>
-                <a href="{{ route('home') }}#menu" data-nav-link="menu" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Menu</a>
-                <a href="{{ route('home') }}#about" data-nav-link="about" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Our Story</a>
-                <a href="{{ route('home') }}#locations" data-nav-link="locations" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Locations</a>
+                <a href="{{ route('home') }}#hero" data-nav-link="hero"
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Home</a>
+                <a href="{{ route('home') }}#menu" data-nav-link="menu"
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Menu</a>
+                <a href="{{ route('home') }}#about" data-nav-link="about"
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Our
+                    Story</a>
+                <a href="{{ route('home') }}#locations" data-nav-link="locations"
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Locations</a>
             </div>
 
             <!-- Right: Actions -->
             <div class="flex items-center space-x-4">
                 <!-- Cart (Desktop Only) -->
-                <a href="/cart" class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
+                <button @click="$dispatch('toggle-cart')"
+                    class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
                     @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
-                    <span class="absolute top-0 right-0 bg-brand-primary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full">0</span>
-                </a>
+                    <span x-data="{ count: {{ count(Session::get('cart', [])) }} }"
+                        x-on:cart-updated.window="count = $event.detail.count || 0" x-text="count"
+                        class="absolute -top-1.5 -right-1.5 bg-red-600 text-white text-[11px] leading-none font-black px-1.5 py-0.5 rounded-full ring-2 ring-white shadow-md z-20"></span>
+                </button>
 
                 @auth
                     <div class="hidden md:flex items-center space-x-3">
@@ -45,21 +54,31 @@
                         </form>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors">
+                    <a href="{{ route('login') }}"
+                        class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors">
                         @svg('far-user-circle', ['class' => 'w-5 h-5'])
                     </a>
                 @endauth
 
-                <!-- Order Button (Desktop) -->
-                <x-ui.button :href="route('home') . '#menu'" variant="primary" size="sm" class="hidden md:flex">
-                    Order Now
-                </x-ui.button>
+                <!-- Order Button (Desktop Only) -->
+                <div class="hidden md:block">
+                    <x-ui.button :href="route('home') . '#menu'" variant="primary" size="sm">
+                        Order Now
+                    </x-ui.button>
+                </div>
+
+                <!-- Cart (Mobile Only) -->
+                <button @click="$dispatch('toggle-cart')"
+                    class="md:hidden flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
+                    @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
+                    <span x-data="{ count: {{ count(Session::get('cart', [])) }} }"
+                        x-on:cart-updated.window="count = $event.detail.count || 0" x-text="count"
+                        class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black px-1.5 py-0.5 rounded-full ring-2 ring-white shadow-sm z-20"></span>
+                </button>
 
                 <!-- Hamburger Button (Mobile Only) -->
-                <button 
-                    @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="md:hidden p-2 text-gray-900 focus:outline-none"
-                >
+                <button @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="md:hidden p-2 text-gray-900 focus:outline-none">
                     <template x-if="!mobileMenuOpen">
                         @svg('fas-bars', ['class' => 'w-6 h-6'])
                     </template>
@@ -72,23 +91,22 @@
     </div>
 
     <!-- Mobile Menu Overlay -->
-    <div 
-        x-show="mobileMenuOpen" 
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0 -translate-y-4"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100 translate-y-0"
+    <div x-show="mobileMenuOpen" x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 -translate-y-4" x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-4"
-        class="md:hidden bg-white border-b border-gray-100 shadow-xl overflow-hidden"
-        style="display: none;"
-    >
+        class="md:hidden bg-white border-b border-gray-100 shadow-xl overflow-hidden" style="display: none;">
         <div class="px-4 pt-4 pb-8 space-y-2">
-            <a href="{{ route('home') }}#hero" data-nav-link="hero" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Home</a>
-            <a href="{{ route('home') }}#menu" data-nav-link="menu" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Menu</a>
-            <a href="{{ route('home') }}#about" data-nav-link="about" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Our Story</a>
-            <a href="{{ route('home') }}#locations" data-nav-link="locations" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Locations</a>
-            
+            <a href="{{ route('home') }}#hero" data-nav-link="hero" @click="mobileMenuOpen = false"
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Home</a>
+            <a href="{{ route('home') }}#menu" data-nav-link="menu" @click="mobileMenuOpen = false"
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Menu</a>
+            <a href="{{ route('home') }}#about" data-nav-link="about" @click="mobileMenuOpen = false"
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Our
+                Story</a>
+            <a href="{{ route('home') }}#locations" data-nav-link="locations" @click="mobileMenuOpen = false"
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Locations</a>
+
             <div class="pt-4 mt-4 border-t border-gray-50 space-y-4">
                 @auth
                     <div class="flex flex-col gap-3">

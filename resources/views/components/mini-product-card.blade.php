@@ -13,7 +13,7 @@
         </div>
     </a>
 
-    <div class="flex-1 min-w-0 relative z-10">
+    <div class="flex-1 min-w-0 relative z-10" x-data="{ qty: 1 }">
         <div class="flex flex-col mb-2">
             <span class="text-sm font-black text-gray-900 truncate">{{ $pizza->name }}</span>
             <span
@@ -22,12 +22,17 @@
 
         <div class="flex items-center gap-2">
             <div class="flex items-center border border-gray-100 rounded-lg overflow-hidden h-7">
-                <button class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">-</button>
-                <input type="text" value="1"
-                    class="w-6 text-center text-[10px] font-bold text-gray-900 border-none focus:ring-0 p-0">
-                <button class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">+</button>
+                <button @click="if(qty > 1) qty--" class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">-</button>
+                <span x-text="qty" class="w-6 text-center text-[10px] font-bold text-gray-900">1</span>
+                <button @click="qty++" class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">+</button>
             </div>
-            <x-ui.button variant="secondary" size="sm" class="flex-1 rounded-lg">
+            <x-ui.button variant="secondary" size="sm" class="flex-1 rounded-lg" @click="$dispatch('add-to-cart', { 
+                pizzaId: {{ $pizza->id }}, 
+                quantity: qty,
+                name: '{{ $pizza->name }}', 
+                price: {{ $pizza->price }}, 
+                image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
+            })">
                 Add to Cart
             </x-ui.button>
         </div>

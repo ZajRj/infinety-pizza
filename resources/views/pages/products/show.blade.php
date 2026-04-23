@@ -68,18 +68,25 @@
                                 </div>
                             </div>
 
-                            <div class="flex-shrink-0 pt-6 border-t border-gray-100 mt-auto">
+                            <div class="flex-shrink-0 pt-6 border-t border-gray-100 mt-auto" x-data="{ qty: 1 }">
                                 <div class="flex flex-col sm:flex-row items-center gap-6">
                                     <div class="flex items-center bg-brand-neutral rounded-[20px] p-1 border border-gray-100">
-                                        <button class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-white shadow-sm hover:text-primary font-black transition-all text-xl active:scale-90">-</button>
-                                        <span class="w-12 text-center font-black text-gray-900 text-xl font-heading">1</span>
-                                        <button class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-white shadow-sm hover:text-primary font-black transition-all text-xl active:scale-90">+</button>
+                                        <button @click="if(qty > 1) qty--" class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-white shadow-sm hover:text-primary font-black transition-all text-xl active:scale-90">-</button>
+                                        <span class="w-12 text-center font-black text-gray-900 text-xl font-heading" x-text="qty">1</span>
+                                        <button @click="qty++" class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-white shadow-sm hover:text-primary font-black transition-all text-xl active:scale-90">+</button>
                                     </div>
                                     <div class="flex-1 w-full">
-                                        <x-ui.button variant="primary" icon="fas-shopping-basket" fullWidth class="group">
+                                        <x-ui.button variant="primary" icon="fas-shopping-basket" fullWidth class="group" 
+                                            @click="$dispatch('add-to-cart', { 
+                                                pizzaId: {{ $pizza->id }}, 
+                                                quantity: qty,
+                                                name: '{{ $pizza->name }}', 
+                                                price: {{ $pizza->price }}, 
+                                                image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
+                                            })">
                                             <span>Add to Order</span>
                                             <span class="opacity-30 mx-1">|</span>
-                                            <span class="italic text-lg font-black font-heading tracking-tight">${{ number_format($pizza->price, 2) }}</span>
+                                            <span class="italic text-lg font-black font-heading tracking-tight" x-text="(qty * {{ $pizza->price }}).toFixed(2) + '€'">{{ number_format($pizza->price, 2) }}€</span>
                                         </x-ui.button>
                                     </div>
                                 </div>

@@ -8,7 +8,7 @@
 ])
 
 @php
-    $baseStyles = "items-center justify-center gap-3 font-black uppercase tracking-[0.2em] transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none rounded-2xl";
+    $baseStyles = "inline-flex items-center justify-center gap-3 font-black uppercase tracking-[0.2em] transition-all active:scale-95 disabled:opacity-50 disabled:pointer-events-none rounded-2xl";
     
     $variants = [
         'primary'   => 'bg-primary text-white shadow-xl shadow-red-900/20 hover:scale-[1.02] hover:bg-red-700',
@@ -25,7 +25,7 @@
         'lg' => 'px-8 py-5 text-sm',
     ];
 
-    $classes = "inline-flex {$baseStyles} {$variants[$variant]} {$sizes[$size]} cursor-pointer " . ($fullWidth ? 'w-full' : '');
+    $classes = "{$baseStyles} {$variants[$variant]} {$sizes[$size]} cursor-pointer " . ($fullWidth ? 'w-full' : '');
 @endphp
 
 @if($href)

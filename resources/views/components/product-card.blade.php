@@ -1,6 +1,6 @@
 @props(['pizza'])
 
-<div class="shadow-md group relative bg-white p-4 rounded-[40px] border border-gray-100 transition-all hover:shadow-2xl hover:shadow-red-900/5 hover:-translate-y-1">
+<div x-data class="shadow-md group relative bg-white p-4 rounded-[40px] border border-gray-100 transition-all hover:shadow-2xl hover:shadow-red-900/5 hover:-translate-y-1">
     <a href="{{ route('pizzas.show', $pizza) }}" class="block">
         <div class="aspect-square rounded-[32px] overflow-hidden bg-gray-50 mb-4 border border-gray-100 transition-all">
             <img src="{{ asset('storage/' . ($pizza->images[0] ?? 'pizzas/placeholder.png')) }}" alt="{{ $pizza->name }}"
@@ -20,7 +20,12 @@
         <p class="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
             {{ $pizza->description }}
         </p>
-        <x-ui.button variant="outline" fullWidth>
+        <x-ui.button variant="outline" fullWidth @click="$dispatch('add-to-cart', { 
+            pizzaId: {{ $pizza->id }}, 
+            name: '{{ $pizza->name }}', 
+            price: {{ $pizza->price }}, 
+            image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
+        })">
             Quick Add
         </x-ui.button>
     </div>

@@ -31,6 +31,11 @@ class Index extends Component
     {
         $this->user = Auth::user();
         
+        // Force refresh to get latest DB values (e.g. after update)
+        if ($this->user) {
+            $this->user->refresh();
+        }
+        
         // Fetching real orders from the database
         $this->orders = $this->user->orders()
             ->latest()
@@ -72,7 +77,8 @@ class Index extends Component
         $this->isEditing = false;
         $this->refreshUserData();
 
-        session()->flash('status', 'Profile updated successfully!');
+        session()->flash('success', 'Profile updated successfully! 🍕✨');
+        $this->dispatch('notify', message: 'Profile updated successfully! 🍕✨', type: 'success');
     }
 
     public function render()

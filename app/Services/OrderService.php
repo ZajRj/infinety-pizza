@@ -18,6 +18,7 @@ class OrderService
             $order = Order::create([
                 'user_id' => $data['user_id'],
                 'delivery_address' => $data['delivery_address'] ?? null,
+                'notes' => $data['notes'] ?? null,
                 'status' => $data['status'],
                 'total' => $this->calculateTotal($data['orderDetails'] ?? []),
             ]);

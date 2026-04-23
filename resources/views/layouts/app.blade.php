@@ -18,8 +18,22 @@
     @livewireStyles
 </head>
 <body class="antialiased font-body bg-white text-gray-800">
+    <!-- Flash Alerts -->
+    @if(session('success'))
+        <x-ui.alert type="success" :message="session('success')" />
+    @endif
+
+    @if(session('error'))
+        <x-ui.alert type="error" :message="session('error')" />
+    @endif
+
+    @if(session('info'))
+        <x-ui.alert type="info" :message="session('info')" />
+    @endif
 
     <x-navigation />
+
+    <livewire:cart-drawer />
 
     <main>
         {{ $slot ?? '' }}
