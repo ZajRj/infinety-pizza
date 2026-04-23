@@ -1,47 +1,48 @@
 <?php
 
-namespace App\Filament\Resources\Ingredients\Tables;
+namespace App\Filament\Resources\Pizzas\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Table;
 
-class IngredientsTable
+class PizzasTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->label(__('ingredients.fields.image'))
+                ImageColumn::make('first_image')
+                    ->label(__('pizzas.fields.images'))
                     ->circular(),
 
                 TextColumn::make('name')
-                    ->label(__('ingredients.fields.name'))
-                    ->searchable(),
+                    ->label(__('pizzas.fields.name'))
+                    ->searchable()
+                    ->sortable(),
 
+                TextColumn::make('price')
+                    ->label(__('pizzas.fields.price'))
+                    ->money('USD')
+                    ->sortable(),
 
-                TextColumn::make('description')
-                    ->label(__('ingredients.fields.description'))
-                    ->searchable(),
+                IconColumn::make('is_active')
+                    ->label(__('pizzas.fields.is_active'))
+                    ->boolean()
+                    ->sortable(),
 
-
-                TextColumn::make('category.name')
-                    ->label(__('ingredients.fields.ingredient_category_id'))
+                TextColumn::make('ingredients_count')
+                    ->label(__('pizzas.fields.ingredients'))
+                    ->counts('ingredients')
                     ->badge()
-                    ->color('info'),
+                    ->color('warning'),
 
-                TextColumn::make('created_atp')
+                TextColumn::make('created_at')
                     ->label(__('generic.fields.created_at'))
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('updated_at')
-                    ->label(__('generic.fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
