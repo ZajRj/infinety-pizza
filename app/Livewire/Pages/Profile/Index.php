@@ -5,6 +5,7 @@ namespace App\Livewire\Pages\Profile;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 #[Layout('layouts.app')]
 class Index extends Component
@@ -13,7 +14,20 @@ class Index extends Component
     public $orders;
     public $totalSpend;
 
+    // Edit Mode State
+    public bool $isEditing = false;
+    public $name;
+    public $email;
+    public $phone_number;
+    public $dni;
+    public $address;
+
     public function mount()
+    {
+        $this->refreshUserData();
+    }
+
+    public function refreshUserData()
     {
         $this->user = Auth::user();
         
@@ -25,6 +39,40 @@ class Index extends Component
 
         // Calculating total spend based on order totals
         $this->totalSpend = $this->user->orders()->sum('total');
+
+        // Initialize form fields
+        $this->name = $this->user->name;
+        $this->email = $this->user->email;
+        $this->phone_number = $this->user->phone_number;
+        $this->dni = $this->user->dni;
+        $this->address = $this->user->address;
+    }
+
+    public function toggleEdit()
+    {
+        $this->isEditing = !$this->isEditing;
+        
+        if (!$this->isEditing) {
+            $this->refreshUserData();
+        }
+    }
+
+    public function save()
+    {
+        $validated = $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users')->ignore($this->user->id)],
+            'phone_number' => ['nullable', 'string', 'max:20'],
+            'dni' => ['required', 'string', 'max:20', Rule::unique('users')->ignore($this->user->id)],
+            'address' => ['nullable', 'string', 'max:500'],
+        ]);
+
+        $this->user->update($validated);
+        
+        $this->isEditing = false;
+        $this->refreshUserData();
+
+        session()->flash('status', 'Profile updated successfully!');
     }
 
     public function render()

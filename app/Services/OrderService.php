@@ -17,6 +17,7 @@ class OrderService
             // 1. Create the Order
             $order = Order::create([
                 'user_id' => $data['user_id'],
+                'delivery_address' => $data['delivery_address'] ?? null,
                 'status' => $data['status'],
                 'total' => $this->calculateTotal($data['orderDetails'] ?? []),
             ]);
@@ -48,6 +49,7 @@ class OrderService
             // Update main order
             $order->update([
                 'user_id' => $data['user_id'] ?? $order->user_id,
+                'delivery_address' => $data['delivery_address'] ?? $order->delivery_address,
                 'status' => $data['status'] ?? $order->status,
                 'total' => $this->calculateTotal($data['orderDetails'] ?? []),
             ]);

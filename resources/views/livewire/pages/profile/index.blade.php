@@ -1,6 +1,18 @@
 <div class="bg-brand-neutral min-h-screen py-12 md:py-20">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
+        <!-- Success Notification -->
+        @if (session('status'))
+            <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 4000)" 
+                class="mb-8 bg-emerald-500 text-white px-6 py-4 rounded-2xl font-black text-[10px] uppercase tracking-[0.2em] shadow-xl shadow-emerald-500/20 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    @svg('fas-check-circle', ['class' => 'w-4 h-4'])
+                    {{ session('status') }}
+                </div>
+                <button @click="show = false">@svg('fas-times', ['class' => 'w-3 h-3'])</button>
+            </div>
+        @endif
+
         <div class="flex flex-col lg:flex-row gap-12 items-start">
             
             <!-- Left Column: User Profile Sidebar -->
@@ -19,50 +31,71 @@
                         </p>
                     </div>
 
-                    <div class="space-y-8 mb-12">
-                        <div>
-                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Contact Info</h4>
-                            <div class="space-y-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="text-primary opacity-50">@svg('fas-envelope', ['class' => 'w-3 h-3'])</div>
-                                    <p class="text-xs font-bold text-gray-700">{{ $user->email }}</p>
+                    @if(!$isEditing)
+                        <div class="space-y-8 mb-12">
+                            <div>
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Contact Info</h4>
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="text-primary opacity-50">@svg('fas-envelope', ['class' => 'w-3 h-3'])</div>
+                                        <p class="text-xs font-bold text-gray-700">{{ $user->email }}</p>
+                                    </div>
+                                    @if($user->phone_number)
+                                        <div class="flex items-center gap-3">
+                                            <div class="text-primary opacity-50">@svg('fas-phone', ['class' => 'w-3 h-3'])</div>
+                                            <p class="text-xs font-bold text-gray-700">{{ $user->phone_number }}</p>
+                                        </div>
+                                    @endif
+                                    @if($user->dni)
+                                        <div class="flex items-center gap-3">
+                                            <div class="text-primary opacity-50">@svg('fas-id-card', ['class' => 'w-3 h-3'])</div>
+                                            <p class="text-xs font-bold text-gray-700">DNI: {{ $user->dni }}</p>
+                                        </div>
+                                    @endif
                                 </div>
-                                @if($user->phone_number)
-                                    <div class="flex items-center gap-3">
-                                        <div class="text-primary opacity-50">@svg('fas-phone', ['class' => 'w-3 h-3'])</div>
-                                        <p class="text-xs font-bold text-gray-700">{{ $user->phone_number }}</p>
-                                    </div>
-                                @endif
-                                @if($user->dni)
-                                    <div class="flex items-center gap-3">
-                                        <div class="text-primary opacity-50">@svg('fas-id-card', ['class' => 'w-3 h-3'])</div>
-                                        <p class="text-xs font-bold text-gray-700">DNI: {{ $user->dni }}</p>
-                                    </div>
-                                @endif
+                            </div>
+
+                            <div>
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Primary Address</h4>
+                                <div class="flex items-start gap-3">
+                                    <div class="text-primary opacity-50 pt-1">@svg('fas-map-marker-alt', ['class' => 'w-3 h-3'])</div>
+                                    <p class="text-xs font-bold text-gray-700 leading-relaxed">
+                                        {{ $user->address ?? 'No address registered yet.' }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
-                        <div>
-                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Primary Address</h4>
-                            <div class="flex items-start gap-3">
-                                <div class="text-primary opacity-50 pt-1">@svg('fas-map-marker-alt', ['class' => 'w-3 h-3'])</div>
-                                <p class="text-xs font-bold text-gray-700 leading-relaxed">
-                                    {{ $user->address ?? 'No address registered yet.' }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <x-ui.button variant="dark" icon="fas-edit" fullWidth>
-                        Edit Profile
-                    </x-ui.button>
-                    
-                    <form action="{{ route('logout') }}" method="POST" class="mt-4">
-                        @csrf
-                        <x-ui.button type="submit" variant="white" fullWidth>
-                            Sign Out
+                        <x-ui.button wire:click="toggleEdit" variant="dark" icon="fas-edit" fullWidth>
+                            Edit Profile
                         </x-ui.button>
-                    </form>
+                    @else
+                        <div class="space-y-6 mb-10">
+                            <x-ui.input label="Full Name" name="name" wire:model="name" required />
+                            <x-ui.input label="Email Address" name="email" type="email" wire:model="email" required />
+                            <x-ui.input label="DNI / ID" name="dni" wire:model="dni" required />
+                            <x-ui.input label="Phone Number" name="phone_number" wire:model="phone_number" />
+                            <x-ui.input label="Delivery Address" name="address" wire:model="address" placeholder="Calle, Número, Piso, Ciudad..." />
+                        </div>
+
+                        <div class="flex flex-col gap-3">
+                            <x-ui.button wire:click="save" variant="primary" icon="fas-save" fullWidth>
+                                Save Changes
+                            </x-ui.button>
+                            <x-ui.button wire:click="toggleEdit" variant="white" fullWidth>
+                                Cancel
+                            </x-ui.button>
+                        </div>
+                    @endif
+                    
+                    @if(!$isEditing)
+                        <form action="{{ route('logout') }}" method="POST" class="mt-4">
+                            @csrf
+                            <x-ui.button type="submit" variant="white" fullWidth>
+                                Sign Out
+                            </x-ui.button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -78,7 +111,6 @@
                         <p class="text-3xl font-black text-primary font-heading italic">{{ number_format($totalSpend, 2) }}€</p>
                         <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Life Spend</p>
                     </div>
-                  
                 </div>
 
                 <!-- Order History -->
