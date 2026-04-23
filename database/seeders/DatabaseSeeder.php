@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,8 +13,23 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // 1. Create the Admin User
+        if (!User::where('email', 'developer@mail.com')->exists()) {
+            User::create([
+                'name' => 'Admin User',
+                'email' => 'developer@mail.com',
+                'dni' => '00000000X',
+                'password' => Hash::make('developer'),
+                'is_admin' => true,
+            ]);
+        }
+
+        // 2. Call the specific seeders
         $this->call([
-            UserSeeder::class,
+            CategorySeeder::class,
+            IngredientSeeder::class,
+            PizzaSeeder::class,
+            CustomerSeeder::class,
         ]);
     }
 }

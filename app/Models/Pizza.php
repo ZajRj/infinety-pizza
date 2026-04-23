@@ -19,9 +19,13 @@ class Pizza extends Model
         'slug',
         'description',
         'price',
-        'first_image',
-        'second_image',
-        'third_image',
+        'images',
+        'is_active',
+    ];
+
+    protected $casts = [
+        'images' => 'array',
+        'is_active' => 'boolean',
     ];
 
     public function category(): BelongsTo
@@ -32,5 +36,13 @@ class Pizza extends Model
     public function ingredients(): BelongsToMany
     {
         return $this->belongsToMany(Ingredient::class, 'ingredient_pizza');
+    }
+
+    /**
+     * Helper to get the first image or a placeholder
+     */
+    public function getFirstImageAttribute(): ?string
+    {
+        return $this->images[0] ?? null;
     }
 }

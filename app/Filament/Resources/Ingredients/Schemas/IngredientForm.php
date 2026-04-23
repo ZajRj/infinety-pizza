@@ -28,6 +28,7 @@ class IngredientForm
                                 ->image()
                                 ->avatar()
                                 ->imageEditor()
+                                ->disk('public')
                                 ->directory('ingredients')
                                 ->columnSpan([
                                     'default' => 12,

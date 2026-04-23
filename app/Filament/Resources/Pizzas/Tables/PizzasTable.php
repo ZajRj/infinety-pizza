@@ -16,9 +16,12 @@ class PizzasTable
     {
         return $table
             ->columns([
-                ImageColumn::make('first_image')
+                ImageColumn::make('images')
                     ->label(__('pizzas.fields.images'))
-                    ->circular(),
+                    ->disk('public')
+                    ->circular()
+                    ->stacked()
+                    ->limit(1),
 
                 TextColumn::make('name')
                     ->label(__('pizzas.fields.name'))

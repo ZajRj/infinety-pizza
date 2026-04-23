@@ -36,6 +36,7 @@ class PizzaForm
                                             ->panelLayout('grid')
                                             ->reorderable()
                                             ->directory('pizzas')
+                                            ->disk('public')
                                             ->columnSpan([
                                                 'default' => 12,
                                                 'md' => 4,
@@ -64,11 +65,11 @@ class PizzaForm
                                                         ->searchable()
                                                         ->preload()
                                                         ->placeholder(__('pizzas.placeholders.category')),
+                                                    
+                                                    Toggle::make('is_active')
+                                                        ->label(__('pizzas.fields.is_active'))
+                                                        ->default(true),
                                                 ]),
-
-                                            Toggle::make('is_active')
-                                                ->label(__('pizzas.fields.is_active'))
-                                                ->default(true),
 
                                             Textarea::make('description')
                                                 ->label(__('pizzas.fields.description'))
@@ -79,7 +80,7 @@ class PizzaForm
                                             'default' => 12,
                                             'md' => 8,
                                         ]),
-                                ]),
+                                    ]),
                             ]),
 
                         Tab::make(__('pizzas.sections.recipe'))
