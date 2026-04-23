@@ -16,7 +16,7 @@
         <div class="flex flex-col lg:flex-row gap-12 items-start">
             
             <!-- Left Column: User Profile Sidebar -->
-            <div class="lg:w-1/3 w-full sticky top-32">
+            <div class="lg:w-1/3 w-full lg:sticky lg:top-32 mb-12 lg:mb-0">
                 <div class="bg-white rounded-[40px] p-10 border border-gray-100 shadow-xl shadow-gray-200/20 relative overflow-hidden">
                     <!-- Top Decorative Blob -->
                     <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
@@ -27,14 +27,14 @@
                         </div>
                         <h2 class="text-3xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none mb-2">{{ $user->name }}</h2>
                         <p class="text-[10px] font-black text-primary uppercase tracking-[0.3em]">
-                            {{ $user->is_admin ? 'Master Chef & Admin' : 'Artisanal Connoisseur' }}
+                            {{ $user->is_admin ? __('Master Chef & Admin') : __('Artisanal Connoisseur') }}
                         </p>
                     </div>
 
                     @if(!$isEditing)
                         <div class="space-y-8 mb-12">
                             <div>
-                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Contact Info</h4>
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">{{ __('Contact Info') }}</h4>
                                 <div class="space-y-4">
                                     <div class="flex items-center gap-3">
                                         <div class="text-primary opacity-50">@svg('fas-envelope', ['class' => 'w-3 h-3'])</div>
@@ -56,18 +56,18 @@
                             </div>
 
                             <div>
-                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">Primary Address</h4>
+                                <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-3 border-b border-gray-50 pb-2">{{ __('Primary Address') }}</h4>
                                 <div class="flex items-start gap-3">
                                     <div class="text-primary opacity-50 pt-1">@svg('fas-map-marker-alt', ['class' => 'w-3 h-3'])</div>
                                     <p class="text-xs font-bold text-gray-700 leading-relaxed">
-                                        {{ $user->address ?? 'No address registered yet.' }}
+                                        {{ $user->address ?? __('No address registered yet.') }}
                                     </p>
                                 </div>
                             </div>
                         </div>
 
                         <x-ui.button wire:click="toggleEdit" variant="dark" icon="fas-edit" fullWidth>
-                            Edit Profile
+                            {{ __('Edit Profile') }}
                         </x-ui.button>
                     @else
                         <div class="space-y-6 mb-10">
@@ -80,10 +80,10 @@
 
                         <div class="flex flex-col gap-3">
                             <x-ui.button wire:click="save" variant="primary" icon="fas-save" fullWidth>
-                                Save Changes
+                                {{ __('Save Changes') }}
                             </x-ui.button>
                             <x-ui.button wire:click="toggleEdit" variant="white" fullWidth>
-                                Cancel
+                                {{ __('Cancel') }}
                             </x-ui.button>
                         </div>
                     @endif
@@ -92,7 +92,7 @@
                         <form action="{{ route('logout') }}" method="POST" class="mt-4">
                             @csrf
                             <x-ui.button type="submit" variant="white" fullWidth>
-                                Sign Out
+                                {{ __('Sign Out') }}
                             </x-ui.button>
                         </form>
                     @endif
@@ -105,20 +105,22 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-12">
                     <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-lg shadow-gray-200/10 text-center">
                         <p class="text-3xl font-black text-gray-900 font-heading">{{ $user->orders()->count() }}</p>
-                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Total Orders</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">{{ __('Total Orders') }}</p>
                     </div>
                     <div class="bg-white p-8 rounded-[32px] border border-gray-100 shadow-lg shadow-gray-200/10 text-center">
                         <p class="text-3xl font-black text-primary font-heading italic">{{ number_format($totalSpend, 2) }}€</p>
-                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">Life Spend</p>
+                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest mt-1">{{ __('Life Spend') }}</p>
                     </div>
                 </div>
 
                 <!-- Order History -->
                 <div class="mb-8">
                     <div class="flex items-center justify-between mb-8">
-                        <h2 class="text-2xl font-black text-gray-900 font-heading uppercase tracking-tighter">Recent Orders</h2>
-                        @if($orders->count() > 0)
-                            <a href="#" class="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">View All</a>
+                        <h2 class="text-2xl font-black text-gray-900 font-heading uppercase tracking-tighter">{{ __('Recent Orders') }}</h2>
+                        @if($user->orders()->count() > 5)
+                            <button wire:click.prevent="toggleAllOrders" class="text-[10px] font-black text-primary uppercase tracking-widest hover:underline">
+                                {{ $showAllOrders ? __('Show Less') : __('View All') }}
+                            </button>
                         @endif
                     </div>
                     
@@ -132,7 +134,7 @@
                                         </div>
                                         <div>
                                             <div class="flex items-center gap-3 mb-1">
-                                                <h3 class="text-lg font-black text-gray-900 font-heading uppercase tracking-tight">Order #{{ $order->id }}</h3>
+                                                <h3 class="text-lg font-black text-gray-900 font-heading uppercase tracking-tight">{{ __('Order') }} #{{ $order->id }}</h3>
                                                 <span class="px-3 py-1 bg-tertiary/10 text-tertiary text-[8px] font-black uppercase tracking-widest rounded-full">
                                                     {{ $order->status->label() ?? 'Processing' }}
                                                 </span>
@@ -144,7 +146,7 @@
                                     </div>
                                     <div class="flex items-center gap-8 justify-between md:justify-end">
                                         <div class="text-right">
-                                            <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest">Amount</p>
+                                            <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest">{{ __('Amount') }}</p>
                                             <p class="text-xl font-black text-primary italic leading-none">{{ number_format($order->total, 2) }}€</p>
                                         </div>
                                         <button class="bg-brand-neutral p-4 rounded-2xl text-gray-900 hover:bg-primary hover:text-white transition-all shadow-sm">
@@ -158,14 +160,20 @@
                                 <div class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-300">
                                     @svg('fas-pizza-slice', ['class' => 'w-6 h-6'])
                                 </div>
-                                <h3 class="text-lg font-black text-gray-900 font-heading uppercase tracking-tight mb-2">No orders yet</h3>
-                                <p class="text-xs font-medium text-gray-400 mb-6">Your pizza journey starts here. Explore our menu!</p>
+                                <h3 class="text-lg font-black text-gray-900 font-heading uppercase tracking-tight mb-2">{{ __('No orders yet') }}</h3>
+                                <p class="text-xs font-medium text-gray-400 mb-6">{{ __('Your pizza journey starts here. Explore our menu!') }}</p>
                                 <x-ui.button :href="route('home') . '#menu'" variant="primary" size="md">
-                                    Order Now
+                                    {{ __('Order Now') }}
                                 </x-ui.button>
                             </div>
                         @endforelse
                     </div>
+
+                    @if($showAllOrders)
+                        <div class="mt-12 flex justify-center">
+                            {{ $orders->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
 

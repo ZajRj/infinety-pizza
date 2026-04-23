@@ -5,7 +5,7 @@
     @include('pages.home.parts.hero')
 
     <!-- Full Menu -->
-    @include('pages.home.parts.menu')
+    <livewire:home.menu />
 
     <!-- Brand Story -->
     @include('pages.home.parts.about')

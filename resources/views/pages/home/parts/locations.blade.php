@@ -16,11 +16,11 @@
                 <div class="absolute -top-10 -left-10 w-32 h-32 bg-primary/5 rounded-full blur-3xl"></div>
 
                 <h2 class="relative z-10 text-4xl md:text-5xl font-black text-gray-900 mb-6 font-heading uppercase tracking-tighter leading-none">
-                    Find us in <br>
-                    <span class="text-primary italic">Madrid</span>
+                    {{ __('Find us in') }} <br>
+                    <span class="text-primary italic">{{ __('Madrid') }}</span>
                 </h2>
                 <p class="relative z-10 text-gray-500 mb-10 text-lg leading-relaxed font-medium">
-                    We have 3 artisanal kitchens spread across the heart of the city. Order for pickup or visit us for the full experience.
+                    {{ __('We have 3 artisanal kitchens spread across the heart of the city. Order for pickup or visit us for the full experience.') }}
                 </p>
 
                 <div class="space-y-6 relative z-10">
@@ -67,7 +67,7 @@
                 
                 <!-- Map Overlay Decoration -->
                 <div class="absolute bottom-6 left-6 bg-white/90 backdrop-blur-md px-6 py-2 rounded-full border border-white/50 text-[10px] font-bold text-gray-400 uppercase tracking-widest z-[1000] shadow-sm">
-                    Infinety Pizza Interactive Map
+                    {{ __('Infinety Pizza Interactive Map') }}
                 </div>
             </div>
 

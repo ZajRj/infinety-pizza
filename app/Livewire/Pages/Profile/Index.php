@@ -6,13 +6,18 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Livewire\WithPagination;
 
 #[Layout('layouts.app')]
 class Index extends Component
 {
+    use WithPagination;
+
     public $user;
-    public $orders;
     public $totalSpend;
+
+    // Order View State
+    public bool $showAllOrders = false;
 
     // Edit Mode State
     public bool $isEditing = false;
@@ -21,6 +26,11 @@ class Index extends Component
     public $phone_number;
     public $dni;
     public $address;
+
+    public function paginationView()
+    {
+        return 'vendor.pagination.custom';
+    }
 
     public function mount()
     {
@@ -36,12 +46,6 @@ class Index extends Component
             $this->user->refresh();
         }
         
-        // Fetching real orders from the database
-        $this->orders = $this->user->orders()
-            ->latest()
-            ->take(10)
-            ->get();
-
         // Calculating total spend based on order totals
         $this->totalSpend = $this->user->orders()->sum('total');
 
@@ -62,6 +66,12 @@ class Index extends Component
         }
     }
 
+    public function toggleAllOrders()
+    {
+        $this->showAllOrders = !$this->showAllOrders;
+        $this->resetPage();
+    }
+
     public function save()
     {
         $validated = $this->validate([
@@ -77,12 +87,20 @@ class Index extends Component
         $this->isEditing = false;
         $this->refreshUserData();
 
-        session()->flash('success', 'Profile updated successfully! 🍕✨');
-        $this->dispatch('notify', message: 'Profile updated successfully! 🍕✨', type: 'success');
+        session()->flash('success', 'Profile updated successfully!');
+        $this->dispatch('notify', message: 'Profile updated successfully!', type: 'success');
     }
 
     public function render()
     {
-        return view('livewire.pages.profile.index');
+        $ordersQuery = $this->user->orders()->latest();
+
+        $orders = $this->showAllOrders 
+            ? $ordersQuery->paginate(10) 
+            : $ordersQuery->take(5)->get();
+
+        return view('livewire.pages.profile.index', [
+            'orders' => $orders
+        ]);
     }
 }

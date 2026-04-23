@@ -15,7 +15,7 @@
                         
                         <!-- Floating Price Tag -->
                         <div class="absolute top-6 right-6 md:top-10 md:right-10 bg-secondary text-gray-900 px-6 py-2 md:px-8 md:py-3 rounded-2xl font-black text-xl md:text-2xl shadow-2xl rotate-3">
-                            ${{ number_format($pizza->price, 2) }}
+                            {{ number_format($pizza->price, 2) }}€
                         </div>
                     </div>
                 </div>
@@ -42,21 +42,21 @@
                                             @svg('fas-star', ['class' => 'w-4 h-4 md:w-5 md:h-5'])
                                         @endfor
                                     </div>
-                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">(120+ Reviews)</span>
+                                    <span class="text-xs font-bold text-gray-400 uppercase tracking-[0.2em]">({{ __('120+ Reviews') }})</span>
                                 </div>
                             </div>
 
                             <div class="lg:flex-1 lg:overflow-y-auto lg:pr-4 mb-6 custom-scrollbar">
                                 <div class="space-y-8">
                                     <div>
-                                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-3">The Experience</h4>
+                                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-3">{{ __('The Experience') }}</h4>
                                         <p class="text-lg text-gray-500 leading-relaxed font-medium italic">
                                             "{{ $pizza->description }}"
                                         </p>
                                     </div>
 
                                     <div>
-                                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-4">Ingredients</h4>
+                                        <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em] mb-4">{{ __('Ingredients') }}</h4>
                                         <div class="flex flex-wrap gap-2">
                                             @foreach($pizza->ingredients as $ingredient)
                                                 <span class="px-4 py-2 bg-white border border-gray-100 rounded-xl text-[10px] font-black text-gray-600 uppercase tracking-widest shadow-sm">
@@ -84,7 +84,7 @@
                                                 price: {{ $pizza->price }}, 
                                                 image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
                                             })">
-                                            <span>Add to Order</span>
+                                            <span>{{ __('Add to Order') }}</span>
                                             <span class="opacity-30 mx-1">|</span>
                                             <span class="italic text-lg font-black font-heading tracking-tight" x-text="(qty * {{ $pizza->price }}).toFixed(2) + '€'">{{ number_format($pizza->price, 2) }}€</span>
                                         </x-ui.button>
@@ -106,9 +106,9 @@
             
             <div class="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-16 relative z-10">
                 <div class="mb-12">
-                    <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">Recommendations</span>
+                    <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">{{ __('Recommendations') }}</span>
                     <h2 class="text-3xl md:text-5xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none">
-                        You might also <span class="text-primary italic">like</span>
+                        {{ __('You might also') }} <span class="text-primary italic">{{ __('like') }}</span>
                     </h2>
                 </div>
 

@@ -18,10 +18,10 @@
                             <div class="bg-primary p-2 rounded-xl">
                                 @svg('fas-award', ['class' => 'w-6 h-6 text-white'])
                             </div>
-                            <span class="font-black text-gray-900 uppercase tracking-tighter text-sm">Best Artisanal Pizza 2024</span>
+                            <span class="font-black text-gray-900 uppercase tracking-tighter text-sm">{{ __('Best Artisanal Pizza 2024') }}</span>
                         </div>
                         <p class="text-xs text-gray-500 leading-relaxed font-medium">
-                            Recognized for our commitment to 48-hour fermented dough and locally sourced ingredients.
+                            {{ __('Recognized for our commitment to 48-hour fermented dough and locally sourced ingredients.') }}
                         </p>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-brand-neutral rounded-[40px] border border-gray-100 shadow-lg flex items-center justify-center -rotate-12 animate-float">
                     <div class="text-center">
                         <span class="block text-3xl font-black text-primary leading-none italic">48h</span>
-                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Fermentation</span>
+                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{{ __('Fermentation') }}</span>
                     </div>
                 </div>
             </div>
@@ -38,20 +38,20 @@
             <!-- Right: The Narrative -->
             <div class="lg:w-1/2">
                 <span class="inline-block px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-widest mb-6">
-                    Our Story
+                    {{ __('Our Story') }}
                 </span>
                 
                 <h2 class="text-4xl md:text-6xl font-black text-gray-900 mb-8 font-heading uppercase tracking-tighter leading-[0.9]">
-                    Passion in <br>
-                    every <span class="text-primary italic">crust</span>
+                    {{ __('Passion in') }} <br>
+                    {{ __('every') }} <span class="text-primary italic">{{ __('crust') }}</span>
                 </h2>
 
                 <div class="space-y-6 text-lg text-gray-500 leading-relaxed font-medium">
                     <p>
-                        Infinety Pizza Co. started with a simple belief: <span class="text-gray-900 font-bold italic">great pizza shouldn't be a luxury, but an experience.</span> We spent years perfecting a dough that is light, airy, and full of flavor.
+                        {{ __('Infinety Pizza Co. started with a simple belief:') }} <span class="text-gray-900 font-bold italic">{{ __("great pizza shouldn't be a luxury, but an experience.") }}</span> {{ __('We spent years perfecting a dough that is light, airy, and full of flavor.') }}
                     </p>
                     <p>
-                        Our secret? Time. Every single dough ball we produce is fermented for exactly 48 hours in our temperature-controlled cellars, ensuring the perfect texture that only patience can provide.
+                        {{ __('Our secret? Time. Every single dough ball we produce is fermented for exactly 48 hours in our temperature-controlled cellars, ensuring the perfect texture that only patience can provide.') }}
                     </p>
                 </div>
 
@@ -59,17 +59,17 @@
                 <div class="grid grid-cols-2 gap-8 mt-12">
                     <div>
                         <span class="block text-4xl font-black text-gray-900 font-heading tracking-tighter">100%</span>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Natural Ingredients</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Natural Ingredients') }}</span>
                     </div>
                     <div>
                         <span class="block text-4xl font-black text-gray-900 font-heading tracking-tighter">15+</span>
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">Signature Recipes</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest">{{ __('Signature Recipes') }}</span>
                     </div>
                 </div>
 
                 <div class="mt-12 flex items-center gap-6">
                     <x-ui.button href="#menu" variant="dark" size="lg">
-                        Explore Our Menu
+                        {{ __('Explore Our Menu') }}
                     </x-ui.button>
                     <div class="flex items-center gap-3">
                         <div class="flex -space-x-3">
@@ -80,7 +80,7 @@
                                 <img src="https://ui-avatars.com/api/?name=MD&background=random" alt="User">
                             </div>
                         </div>
-                        <span class="text-xs font-bold text-gray-400">Join hundreds of happy pizza lovers</span>
+                        <span class="text-xs font-bold text-gray-400">{{ __('Join hundreds of happy pizza lovers') }}</span>
                     </div>
                 </div>
             </div>

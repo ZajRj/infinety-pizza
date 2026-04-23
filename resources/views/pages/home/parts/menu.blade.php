@@ -3,14 +3,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <section id="menu" class="py-16">
             <div class="text-center mb-12">
-                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-2 font-heading uppercase tracking-tighter">The Full Menu</h2>
+                <h2 class="text-3xl md:text-4xl font-black text-gray-900 mb-2 font-heading uppercase tracking-tighter">{{ __('The Full Menu') }}</h2>
                 <div class="h-1 w-16 bg-primary mx-auto"></div>
             </div>
 
             <!-- Categories -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
                 <x-ui.button variant="primary" size="sm" class="rounded-full">
-                    All Pizzas
+                    {{ __('All Pizzas') }}
                 </x-ui.button>
                 @foreach($categories as $category)
                     <x-ui.button variant="outline" size="sm" class="rounded-full !text-gray-500 !border-gray-100 hover:!text-white">

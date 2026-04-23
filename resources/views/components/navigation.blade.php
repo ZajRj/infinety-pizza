@@ -15,14 +15,13 @@
             <!-- Center: Navigation Links (Desktop) -->
             <div class="hidden md:flex items-center justify-center space-x-10 flex-1 px-8">
                 <a href="{{ route('home') }}#hero" data-nav-link="hero"
-                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Home</a>
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">{{ __('Home') }}</a>
                 <a href="{{ route('home') }}#menu" data-nav-link="menu"
-                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Menu</a>
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">{{ __('Menu') }}</a>
                 <a href="{{ route('home') }}#about" data-nav-link="about"
-                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Our
-                    Story</a>
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">{{ __('Our Story') }}</a>
                 <a href="{{ route('home') }}#locations" data-nav-link="locations"
-                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Locations</a>
+                    class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">{{ __('Locations') }}</a>
             </div>
 
             <!-- Right: Actions -->
@@ -40,16 +39,16 @@
                     <div class="hidden md:flex items-center space-x-3">
                         @if(auth()->user()->is_admin)
                             <x-ui.button href="/admin" variant="tertiary" size="sm">
-                                Admin
+                                {{ __('Admin') }}
                             </x-ui.button>
                         @endif
                         <x-ui.button :href="route('profile')" variant="white" size="sm">
-                            Profile
+                            {{ __('Profile') }}
                         </x-ui.button>
                         <form action="{{ route('logout') }}" method="POST" class="inline">
                             @csrf
                             <x-ui.button type="submit" variant="white" size="sm" class="!text-gray-400">
-                                Logout
+                                {{ __('Logout') }}
                             </x-ui.button>
                         </form>
                     </div>
@@ -63,7 +62,7 @@
                 <!-- Order Button (Desktop Only) -->
                 <div class="hidden md:block">
                     <x-ui.button :href="route('home') . '#menu'" variant="primary" size="sm">
-                        Order Now
+                        {{ __('Order Now') }}
                     </x-ui.button>
                 </div>
 
@@ -98,40 +97,39 @@
         class="md:hidden bg-white border-b border-gray-100 shadow-xl overflow-hidden" style="display: none;">
         <div class="px-4 pt-4 pb-8 space-y-2">
             <a href="{{ route('home') }}#hero" data-nav-link="hero" @click="mobileMenuOpen = false"
-                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Home</a>
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">{{ __('Home') }}</a>
             <a href="{{ route('home') }}#menu" data-nav-link="menu" @click="mobileMenuOpen = false"
-                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Menu</a>
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">{{ __('Menu') }}</a>
             <a href="{{ route('home') }}#about" data-nav-link="about" @click="mobileMenuOpen = false"
-                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Our
-                Story</a>
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">{{ __('Our Story') }}</a>
             <a href="{{ route('home') }}#locations" data-nav-link="locations" @click="mobileMenuOpen = false"
-                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Locations</a>
+                class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">{{ __('Locations') }}</a>
 
             <div class="pt-4 mt-4 border-t border-gray-50 space-y-4">
                 @auth
                     <div class="flex flex-col gap-3">
                         <x-ui.button :href="route('profile')" variant="dark" fullWidth>
-                            Go to Profile
+                            {{ __('Go to Profile') }}
                         </x-ui.button>
                         @if(auth()->user()->is_admin)
                             <x-ui.button href="/admin" variant="tertiary" fullWidth>
-                                Admin Panel
+                                {{ __('Admin Panel') }}
                             </x-ui.button>
                         @endif
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
                             <x-ui.button type="submit" variant="white" fullWidth>
-                                Sign Out
+                                {{ __('Sign Out') }}
                             </x-ui.button>
                         </form>
                     </div>
                 @else
                     <div class="flex flex-col gap-3">
                         <x-ui.button :href="route('login')" variant="primary" fullWidth>
-                            Sign In
+                            {{ __('Sign In') }}
                         </x-ui.button>
                         <x-ui.button :href="route('register')" variant="outline" fullWidth>
-                            Create Account
+                            {{ __('Create Account') }}
                         </x-ui.button>
                     </div>
                 @endauth

@@ -27,12 +27,12 @@
 
                     <h1
                         class="text-5xl md:text-6xl font-black text-gray-900 leading-[0.85] mb-4 font-heading uppercase tracking-tighter">
-                        Artesanal <br>
-                        <span class="text-primary italic">Flavor</span> for your <br>
-                        convenience
+                        {{ __('Artesanal') }} <br>
+                        <span class="text-primary italic">{{ __('Flavor') }}</span> {{ __('for your') }} <br>
+                        {{ __('convenience') }}
                     </h1>
                     <p class="text-base text-gray-500 mb-6 max-w-sm font-medium leading-snug">
-                        Handcrafted with passion, fresh ingredients, and delivered straight to your door.
+                        {{ __('Handcrafted with passion, fresh ingredients, and delivered straight to your door.') }}
                     </p>
 
                     <div class="relative inline-block group">
@@ -40,7 +40,7 @@
                             class="absolute -inset-1 bg-primary/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity">
                         </div>
                         <x-ui.button href="#menu" variant="primary" size="lg" class="relative z-10">
-                            Order Now
+                            {{ __('Order Now') }}
                         </x-ui.button>
                     </div>
                 </div>

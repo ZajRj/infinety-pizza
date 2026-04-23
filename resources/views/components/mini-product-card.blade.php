@@ -16,8 +16,7 @@
     <div class="flex-1 min-w-0 relative z-10" x-data="{ qty: 1 }">
         <div class="flex flex-col mb-2">
             <span class="text-sm font-black text-gray-900 truncate">{{ $pizza->name }}</span>
-            <span
-                class="text-base font-black text-primary italic leading-none">${{ number_format($pizza->price, 2) }}</span>
+            <span class="text-sm font-black text-primary italic">{{ number_format($pizza->price, 2) }}€</span>
         </div>
 
         <div class="flex items-center gap-2">
@@ -33,7 +32,7 @@
                 price: {{ $pizza->price }}, 
                 image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
             })">
-                Add to Cart
+                {{ __('Add to Cart') }}
             </x-ui.button>
         </div>
     </div>

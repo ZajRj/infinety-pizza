@@ -15,7 +15,7 @@
     <div class="px-2">
         <div class="flex justify-between items-start mb-1">
             <h3 class="text-lg font-black text-gray-900 font-heading leading-tight uppercase">{{ $pizza->name }}</h3>
-            <span class="text-lg font-black text-primary italic">${{ number_format($pizza->price, 2) }}</span>
+            <span class="text-xl font-black text-primary italic">{{ number_format($pizza->price, 2) }}€</span>
         </div>
         <p class="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
             {{ $pizza->description }}
@@ -26,7 +26,7 @@
             price: {{ $pizza->price }}, 
             image: '{{ $pizza->images[0] ?? 'pizzas/placeholder.png' }}' 
         })">
-            Quick Add
+            {{ __('Quick Add') }}
         </x-ui.button>
     </div>
 </div>

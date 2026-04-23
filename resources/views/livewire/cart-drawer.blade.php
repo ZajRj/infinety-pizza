@@ -31,8 +31,8 @@
         <!-- Header -->
         <div class="p-8 border-b border-gray-100 flex items-center justify-between">
             <div>
-                <h2 class="text-3xl font-black text-gray-900 font-heading uppercase tracking-tighter mb-1">Your Order</h2>
-                <p class="text-[10px] font-black text-primary uppercase tracking-[0.2em]" x-text="`${items.length} Pizzas Selected`"></p>
+                <h2 class="text-3xl font-black text-gray-900 font-heading uppercase tracking-tighter mb-1">{{ __('Your Order') }}</h2>
+                <p class="text-[10px] font-black text-primary uppercase tracking-[0.2em]" x-text="`${items.length} {{ __('Pizzas Selected') }}`"></p>
             </div>
             <button @click="open = false" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-brand-neutral text-gray-900 hover:bg-primary hover:text-white transition-all shadow-sm group">
                 @svg('fas-times', ['class' => 'w-5 h-5 group-hover:rotate-90 transition-transform'])
@@ -46,8 +46,8 @@
                     <div class="w-24 h-24 bg-brand-neutral rounded-full flex items-center justify-center text-gray-300 mb-6">
                         @svg('fas-pizza-slice', ['class' => 'w-10 h-10'])
                     </div>
-                    <h3 class="text-xl font-black text-gray-900 font-heading uppercase tracking-tight mb-2">Cart is empty</h3>
-                    <p class="text-xs font-medium text-gray-400 max-w-[200px]">Your artisanal journey starts when you add a pizza!</p>
+                    <h3 class="text-xl font-black text-gray-900 font-heading uppercase tracking-tight mb-2">{{ __('Cart is empty') }}</h3>
+                    <p class="text-xs font-medium text-gray-400 max-w-[200px]">{{ __('Your artisanal journey starts when you add a pizza!') }}</p>
                 </div>
             </template>
 
@@ -70,7 +70,7 @@
                                     <span class="w-8 text-center font-black text-gray-900 text-xs" x-text="item.quantity"></span>
                                     <button @click="increase(item.id)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-brand-neutral font-bold transition-all">+</button>
                                 </div>
-                                <span class="text-sm font-black text-primary italic" x-text="`$${(item.price * item.quantity).toFixed(2)}` "></span>
+                                <span class="text-sm font-black text-primary italic" x-text="`${(item.price * item.quantity).toFixed(2)}€` "></span>
                             </div>
                         </div>
                     </div>
@@ -82,23 +82,23 @@
         <div class="p-8 bg-brand-neutral/50 border-t border-gray-100 space-y-6">
             <div class="flex justify-between items-end">
                 <div>
-                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">Total Amount</p>
-                    <p class="text-4xl font-black text-gray-900 font-heading tracking-tighter" x-text="`$${total.toFixed(2)}`"></p>
+                    <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{{ __('Order Summary') }}</p>
+                    <p class="text-4xl font-black text-gray-900 font-heading tracking-tighter" x-text="`${total.toFixed(2)}€`"></p>
                 </div>
                 <div class="text-right">
-                    <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full">Free Delivery</p>
+                    <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full">{{ __('FREE') }}</p>
                 </div>
             </div>
 
             <template x-if="items.length > 0">
                 <a href="{{ route('checkout') }}" class="w-full bg-primary text-white py-5 rounded-[25px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-red-900/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 group">
                     @svg('fas-shopping-bag', ['class' => 'w-4 h-4 group-hover:-translate-y-1 transition-transform'])
-                    Go to Checkout
+                    {{ __('Go to Checkout') }}
                 </a>
             </template>
             
             <button @click="open = false" class="w-full text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-gray-900 transition-colors">
-                Continue Shopping
+                {{ __('Continue Shopping') }}
             </button>
         </div>
     </div>
