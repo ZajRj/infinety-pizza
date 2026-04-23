@@ -10,11 +10,13 @@ return [
         'images' => 'Imágenes',
         'is_active' => 'Activa',
         'ingredients' => 'Ingredientes',
+        'category' => 'Categoría',
     ],
     'placeholders' => [
         'name' => 'ej. Margherita',
         'description' => 'Describe la pizza...',
         'price' => '0.00',
+        'category' => 'Selecciona una categoría',
     ],
     'sections' => [
         'details' => 'Detalles de la Pizza',

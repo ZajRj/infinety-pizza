@@ -7,6 +7,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Components\Grid;
@@ -55,6 +56,14 @@ class PizzaForm
                                                         ->prefix('$')
                                                         ->required()
                                                         ->placeholder(__('pizzas.placeholders.price')),
+
+                                                    Select::make('category_id')
+                                                        ->label(__('pizzas.fields.category'))
+                                                        ->relationship('category', 'name')
+                                                        ->required()
+                                                        ->searchable()
+                                                        ->preload()
+                                                        ->placeholder(__('pizzas.placeholders.category')),
                                                 ]),
 
                                             Toggle::make('is_active')
