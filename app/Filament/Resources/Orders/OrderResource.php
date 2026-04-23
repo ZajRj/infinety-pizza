@@ -21,6 +21,11 @@ class OrderResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('generic.menu.shop');
+    }
+
     public static function getModelLabel(): string
     {
         return __('orders.title');

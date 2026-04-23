@@ -20,6 +20,11 @@ class PizzaResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('generic.menu.managing');
+    }
+
     public static function getModelLabel(): string
     {
         return __('pizzas.title');

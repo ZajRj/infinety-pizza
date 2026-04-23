@@ -20,6 +20,11 @@ class IngredientCategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('generic.menu.managing');
+    }
+
     public static function getModelLabel(): string
     {
         return __('ingredient_categories.title');

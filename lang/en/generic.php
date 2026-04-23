@@ -17,4 +17,8 @@ return [
         'save' => 'Save',
         'cancel' => 'Cancel',
     ],
+    'menu' => [
+        'shop' => 'Shop',
+        'managing' => 'Gestión',
+    ],
 ];
