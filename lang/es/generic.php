@@ -5,6 +5,11 @@ return [
         'created_at' => 'Creado el',
         'updated_at' => 'Actualizado el',
         'id' => 'ID',
+        'observations' => 'Observaciones',
+    ],
+    'sections' => [
+        'details' => 'Detalles Generales',
+        'visuals' => 'Visuales y Medios',
     ],
     'actions' => [
         'edit' => 'Editar',

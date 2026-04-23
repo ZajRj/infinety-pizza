@@ -3,14 +3,11 @@
 namespace App\Filament\Resources\Customers\RelationManagers;
 
 use App\OrderStatus;
-use Filament\Actions\AssociateAction;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\CreateAction;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
-use Filament\Actions\DissociateAction;
-use Filament\Actions\DissociateBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -22,30 +19,22 @@ class OrdersRelationManager extends RelationManager
 {
     protected static string $relationship = 'orders';
 
-    public static function getTitle(\Illuminate\Database\Eloquent\Model $ownerRecord, string $pageClass): string
-    {
-        return __('orders.plural');
-    }
-
-    public static function getModelLabel(): string
-    {
-        return __('orders.title');
-    }
-
     public function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 Select::make('status')
                     ->label(__('orders.fields.status'))
-                    ->options(OrderStatus::class)
-                    ->required(),
-
+                    ->options(collect(OrderStatus::cases())->mapWithKeys(fn ($status) => [$status->value => $status->label()]))
+                    ->required()
+                    ->default(OrderStatus::PENDING->value),
+                
                 TextInput::make('total')
                     ->label(__('orders.fields.total'))
                     ->numeric()
                     ->prefix('$')
-                    ->required(),
+                    ->required()
+                    ->readonly(),
             ]);
     }
 
@@ -55,41 +44,44 @@ class OrdersRelationManager extends RelationManager
             ->recordTitleAttribute('id')
             ->columns([
                 TextColumn::make('id')
-                    ->label('ID')
-                    ->sortable(),
-
+                    ->label(__('orders.fields.id'))
+                    ->prefix('#'),
+                
                 TextColumn::make('status')
                     ->label(__('orders.fields.status'))
                     ->badge()
-                    ->sortable(),
+                    ->formatStateUsing(fn ($state) => $state instanceof OrderStatus ? $state->label() : $state)
+                    ->color(fn ($state) => match($state) {
+                        OrderStatus::PENDING => 'warning',
+                        OrderStatus::CONFIRMED => 'success',
+                        OrderStatus::CANCELLED => 'danger',
+                        default => 'gray',
+                    }),
 
                 TextColumn::make('total')
                     ->label(__('orders.fields.total'))
-                    ->money('USD')
-                    ->sortable(),
+                    ->money('USD'),
 
                 TextColumn::make('created_at')
                     ->label(__('orders.fields.created_at'))
-                    ->dateTime()
-                    ->sortable(),
+                    ->dateTime(),
             ])
             ->filters([
                 //
             ])
             ->headerActions([
-                CreateAction::make(),
-                AssociateAction::make(),
+                // Remove create action if you want to force creation from the main Order resource
+                // Or ensure it handles the user_id correctly.
             ])
-            ->recordActions([
-                EditAction::make(),
-                DissociateAction::make(),
-                DeleteAction::make(),
-            ])
-            ->toolbarActions([
-                BulkActionGroup::make([
-                    DissociateBulkAction::make(),
-                    DeleteBulkAction::make(),
+            ->actions([
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    DeleteAction::make(),
                 ]),
+            ])
+            ->bulkActions([
+                //
             ]);
     }
 }
