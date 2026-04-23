@@ -10,7 +10,5 @@ Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 
 // Auth & Profile
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/profile', function() { 
-        return view('pages.profile.index'); 
-    })->name('profile');
+    Route::get('/profile', \App\Livewire\Pages\Profile\Index::class)->name('profile');
 });

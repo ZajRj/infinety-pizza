@@ -27,10 +27,9 @@
                     class="w-6 text-center text-[10px] font-bold text-gray-900 border-none focus:ring-0 p-0">
                 <button class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">+</button>
             </div>
-            <button
-                class="flex-1 bg-primary text-white text-[10px] font-bold py-1.5 rounded-lg hover:bg-red-700 transition-colors">
+            <x-ui.button variant="secondary" size="sm" class="flex-1 rounded-lg">
                 Add to Cart
-            </button>
+            </x-ui.button>
         </div>
     </div>
 </div>

@@ -21,17 +21,20 @@
             </div>
 
             <!-- Form -->
-            <form action="#" class="space-y-6">
-                <div>
-                    <label for="email" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Email Address</label>
-                    <input type="email" id="email" placeholder="chef@infinety.com" 
-                        class="w-full bg-brand-neutral/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                </div>
+            <form action="{{ route('password.email') }}" method="POST" class="space-y-6">
+                @csrf
+                <x-ui.input 
+                    label="Email Address" 
+                    name="email" 
+                    type="email" 
+                    placeholder="leo@artisanal.com" 
+                    required 
+                    :value="old('email')"
+                />
 
-                <button type="submit" class="w-full bg-primary text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-red-900/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-                    @svg('fas-paper-plane', ['class' => 'w-4 h-4'])
+                <x-ui.button type="submit" variant="primary" icon="fas-paper-plane" fullWidth>
                     Send Reset Link
-                </button>
+                </x-ui.button>
             </form>
 
             <!-- Footer -->

@@ -20,8 +20,8 @@
         <p class="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
             {{ $pizza->description }}
         </p>
-        <button class="w-full py-2.5 rounded-2xl border-2 border-gray-50 text-gray-900 font-bold text-sm hover:bg-primary hover:text-white hover:border-primary transition-all">
+        <x-ui.button variant="outline" fullWidth>
             Quick Add
-        </button>
+        </x-ui.button>
     </div>
 </div>

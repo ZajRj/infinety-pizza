@@ -68,9 +68,9 @@
                 </div>
 
                 <div class="mt-12 flex items-center gap-6">
-                    <a href="#menu" class="bg-gray-900 text-white px-8 py-4 rounded-2xl font-bold hover:bg-primary transition-all shadow-xl shadow-gray-900/10">
+                    <x-ui.button href="#menu" variant="dark" size="lg">
                         Explore Our Menu
-                    </a>
+                    </x-ui.button>
                     <div class="flex items-center gap-3">
                         <div class="flex -space-x-3">
                             <div class="w-10 h-10 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-[10px] font-bold text-gray-400 overflow-hidden">
@@ -80,7 +80,7 @@
                                 <img src="https://ui-avatars.com/api/?name=MD&background=random" alt="User">
                             </div>
                         </div>
-                        <span class="text-xs font-bold text-gray-400">Join 10k+ happy pizza lovers</span>
+                        <span class="text-xs font-bold text-gray-400">Join hundreds of happy pizza lovers</span>
                     </div>
                 </div>
             </div>

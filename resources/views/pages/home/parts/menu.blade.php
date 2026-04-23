@@ -9,11 +9,13 @@
 
             <!-- Categories -->
             <div class="flex flex-wrap justify-center gap-3 mb-12">
-                <button class="px-6 py-2 rounded-full bg-primary text-white font-bold text-sm shadow-lg shadow-red-900/10">All Pizzas</button>
+                <x-ui.button variant="primary" size="sm" class="rounded-full">
+                    All Pizzas
+                </x-ui.button>
                 @foreach($categories as $category)
-                    <button class="px-6 py-2 rounded-full bg-white border border-gray-100 text-gray-500 font-bold text-sm hover:border-primary hover:text-primary transition-all">
+                    <x-ui.button variant="outline" size="sm" class="rounded-full !text-gray-500 !border-gray-100 hover:!text-white">
                         {{ $category->name }}
-                    </button>
+                    </x-ui.button>
                 @endforeach
             </div>
 

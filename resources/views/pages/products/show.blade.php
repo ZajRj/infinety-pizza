@@ -76,12 +76,11 @@
                                         <button class="w-12 h-12 flex items-center justify-center rounded-[15px] bg-white shadow-sm hover:text-primary font-black transition-all text-xl active:scale-90">+</button>
                                     </div>
                                     <div class="flex-1 w-full">
-                                        <button class="group w-full bg-primary text-white py-5 px-5 rounded-[25px] font-black text-sm uppercase tracking-[0.3em] shadow-2xl shadow-red-900/30 hover:scale-[1.03] active:scale-95 transition-all flex items-center justify-center gap-4">
-                                            @svg('fas-shopping-basket', ['class' => 'w-5 h-5 group-hover:rotate-12 transition-transform'])
+                                        <x-ui.button variant="primary" icon="fas-shopping-basket" fullWidth class="group">
                                             <span>Add to Order</span>
                                             <span class="opacity-30 mx-1">|</span>
                                             <span class="italic text-lg font-black font-heading tracking-tight">${{ number_format($pizza->price, 2) }}</span>
-                                        </button>
+                                        </x-ui.button>
                                     </div>
                                 </div>
                             </div>

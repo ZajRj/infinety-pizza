@@ -39,10 +39,9 @@
                         <div
                             class="absolute -inset-1 bg-primary/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity">
                         </div>
-                        <a href="#menu"
-                            class="relative z-10 bg-primary text-white px-8 py-3.5 rounded-xl font-bold text-base hover:scale-105 active:scale-95 transition-all shadow-xl shadow-red-900/20 inline-block">
+                        <x-ui.button href="#menu" variant="primary" size="lg" class="relative z-10">
                             Order Now
-                        </a>
+                        </x-ui.button>
                     </div>
                 </div>
 

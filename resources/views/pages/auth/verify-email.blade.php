@@ -33,17 +33,17 @@
             <!-- Form -->
             <form action="{{ route('verification.send') }}" method="POST" class="space-y-4">
                 @csrf
-                <button type="submit" class="w-full bg-primary text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-red-900/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
+                <x-ui.button type="submit" variant="primary" fullWidth>
                     Resend Email
-                </button>
+                </x-ui.button>
             </form>
 
             <!-- Logout Option -->
             <form action="{{ route('logout') }}" method="POST" class="mt-8">
                 @csrf
-                <button type="submit" class="text-xs font-bold text-gray-400 uppercase tracking-widest hover:text-primary transition-colors">
+                <x-ui.button type="submit" variant="white" size="sm">
                     Sign Out
-                </button>
+                </x-ui.button>
             </form>
 
         </div>

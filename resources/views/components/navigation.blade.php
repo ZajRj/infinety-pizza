@@ -1,64 +1,158 @@
-<nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
+<nav x-data="{ mobileMenuOpen: false }" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-20">
             
             <!-- Left: Logo -->
             <div class="flex-shrink-0 flex items-center">
                 <a href="{{ route('home') }}" class="flex items-center gap-2 group">
-                    <span class="text-xl font-bold text-brand-primary tracking-tight font-heading">
-                        Infinety <span class="text-gray-900 group-hover:text-brand-primary transition-colors">Pizza Co.</span>
+                    <span class="text-xl font-bold text-brand-primary tracking-tight font-heading uppercase italic">
+                        Infinety <span class="text-gray-900 group-hover:text-brand-primary transition-colors not-italic">Pizza</span>
                     </span>
                 </a>
             </div>
 
-            <!-- Center: Navigation Links -->
-            <div class="hidden sm:flex items-center justify-center space-x-10 flex-1">
-                <a href="{{ route('home') }}#hero" data-nav-link="hero" class="nav-link text-sm font-semibold text-brand-primary border-b-2 border-brand-primary pb-1 transition-all">Home</a>
-                <a href="{{ route('home') }}#menu" data-nav-link="menu" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Menu</a>
-                <a href="{{ route('home') }}#about" data-nav-link="about" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Our Story</a>
-                <a href="{{ route('home') }}#locations" data-nav-link="locations" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Locations</a>
+            <!-- Center: Navigation Links (Desktop) -->
+            <div class="hidden md:flex items-center justify-center space-x-10 flex-1 px-8">
+                <a href="{{ route('home') }}#hero" data-nav-link="hero" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Home</a>
+                <a href="{{ route('home') }}#menu" data-nav-link="menu" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Menu</a>
+                <a href="{{ route('home') }}#about" data-nav-link="about" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Our Story</a>
+                <a href="{{ route('home') }}#locations" data-nav-link="locations" class="nav-link text-[10px] font-black text-gray-400 hover:text-primary uppercase tracking-[0.2em] transition-all border-b-2 border-transparent pb-1">Locations</a>
             </div>
 
             <!-- Right: Actions -->
-            <div class="flex items-center space-x-6">
-                <!-- Cart -->
-                <a href="/cart" class="text-gray-700 hover:text-brand-primary transition-colors relative">
+            <div class="flex items-center space-x-4">
+                <!-- Cart (Desktop Only) -->
+                <a href="/cart" class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
                     @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
-                    <span class="absolute -top-2 -right-2 bg-brand-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                    <span class="absolute top-0 right-0 bg-brand-primary text-white text-[8px] font-black px-1.5 py-0.5 rounded-full">0</span>
                 </a>
 
                 @auth
-                    @if(auth()->user()->is_admin)
-                        <a href="/admin" class="hidden lg:block text-[10px] font-black text-tertiary uppercase tracking-widest hover:opacity-70 transition-opacity">
-                            Admin
-                        </a>
-                    @endif
-                    <a href="{{ route('profile') }}" class="text-[10px] font-black text-gray-900 uppercase tracking-widest hover:text-primary transition-colors">
-                        Profile
-                    </a>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="text-[10px] font-black text-gray-400 uppercase tracking-widest hover:text-primary transition-colors">
-                            Logout
-                        </button>
-                    </form>
+                    <div class="hidden md:flex items-center space-x-3">
+                        @if(auth()->user()->is_admin)
+                            <x-ui.button href="/admin" variant="tertiary" size="sm">
+                                Admin
+                            </x-ui.button>
+                        @endif
+                        <x-ui.button :href="route('profile')" variant="white" size="sm">
+                            Profile
+                        </x-ui.button>
+                        <form action="{{ route('logout') }}" method="POST" class="inline">
+                            @csrf
+                            <x-ui.button type="submit" variant="white" size="sm" class="!text-gray-400">
+                                Logout
+                            </x-ui.button>
+                        </form>
+                    </div>
                 @else
-                    <a href="{{ route('login') }}" class="text-gray-700 hover:text-brand-primary transition-colors">
+                    <a href="{{ route('login') }}" class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors">
                         @svg('far-user-circle', ['class' => 'w-5 h-5'])
                     </a>
                 @endauth
 
-                <!-- Order Button -->
-                <a href="{{ route('home') }}#menu" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
+                <!-- Order Button (Desktop) -->
+                <x-ui.button :href="route('home') . '#menu'" variant="primary" size="sm" class="hidden md:flex">
                     Order Now
-                </a>
+                </x-ui.button>
 
-                <!-- Mobile menu button (optional) -->
-                <button class="sm:hidden text-gray-700">
-                    @svg('fas-bars', ['class' => 'w-6 h-6'])
+                <!-- Hamburger Button (Mobile Only) -->
+                <button 
+                    @click="mobileMenuOpen = !mobileMenuOpen"
+                    class="md:hidden p-2 text-gray-900 focus:outline-none"
+                >
+                    <template x-if="!mobileMenuOpen">
+                        @svg('fas-bars', ['class' => 'w-6 h-6'])
+                    </template>
+                    <template x-if="mobileMenuOpen">
+                        @svg('fas-times', ['class' => 'w-6 h-6'])
+                    </template>
                 </button>
             </div>
-
         </div>
     </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div 
+        x-show="mobileMenuOpen" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0 -translate-y-4"
+        x-transition:enter-end="opacity-100 translate-y-0"
+        x-transition:leave="transition ease-in duration-200"
+        x-transition:leave-start="opacity-100 translate-y-0"
+        x-transition:leave-end="opacity-0 -translate-y-4"
+        class="md:hidden bg-white border-b border-gray-100 shadow-xl overflow-hidden"
+        style="display: none;"
+    >
+        <div class="px-4 pt-4 pb-8 space-y-2">
+            <a href="{{ route('home') }}#hero" data-nav-link="hero" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Home</a>
+            <a href="{{ route('home') }}#menu" data-nav-link="menu" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Menu</a>
+            <a href="{{ route('home') }}#about" data-nav-link="about" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Our Story</a>
+            <a href="{{ route('home') }}#locations" data-nav-link="locations" @click="mobileMenuOpen = false" class="nav-link block px-4 py-3 rounded-2xl text-sm font-black text-gray-900 uppercase tracking-widest hover:bg-brand-neutral">Locations</a>
+            
+            <div class="pt-4 mt-4 border-t border-gray-50 space-y-4">
+                @auth
+                    <div class="flex flex-col gap-3">
+                        <x-ui.button :href="route('profile')" variant="dark" fullWidth>
+                            Go to Profile
+                        </x-ui.button>
+                        @if(auth()->user()->is_admin)
+                            <x-ui.button href="/admin" variant="tertiary" fullWidth>
+                                Admin Panel
+                            </x-ui.button>
+                        @endif
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <x-ui.button type="submit" variant="white" fullWidth>
+                                Sign Out
+                            </x-ui.button>
+                        </form>
+                    </div>
+                @else
+                    <div class="flex flex-col gap-3">
+                        <x-ui.button :href="route('login')" variant="primary" fullWidth>
+                            Sign In
+                        </x-ui.button>
+                        <x-ui.button :href="route('register')" variant="outline" fullWidth>
+                            Create Account
+                        </x-ui.button>
+                    </div>
+                @endauth
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section[id], div[id="hero"]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            const activeClasses = ['text-primary', 'border-primary'];
+            const inactiveClasses = ['text-gray-400', 'border-transparent'];
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '-20% 0px -70% 0px',
+                threshold: 0
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.getAttribute('id');
+                        navLinks.forEach(link => {
+                            if (link.getAttribute('data-nav-link') === id) {
+                                link.classList.add(...activeClasses);
+                                link.classList.remove(...inactiveClasses);
+                            } else if (link.hasAttribute('data-nav-link')) {
+                                link.classList.remove(...activeClasses);
+                                link.classList.add(...inactiveClasses);
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => observer.observe(section));
+        });
+    </script>
 </nav>

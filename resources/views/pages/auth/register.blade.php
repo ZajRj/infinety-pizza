@@ -18,57 +18,18 @@
             <form action="{{ route('register') }}" method="POST" class="space-y-6">
                 @csrf
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="name" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Full Name</label>
-                        <input type="text" id="name" name="name" value="{{ old('name') }}" placeholder="Leonardo Da Vinci" required
-                            class="w-full bg-brand-neutral/50 border @error('name') border-primary @else border-gray-100 @enderror rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                        @error('name')
-                            <p class="mt-2 text-[10px] font-bold text-primary uppercase tracking-wide px-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="dni" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">DNI / ID Number</label>
-                        <input type="text" id="dni" name="dni" value="{{ old('dni') }}" placeholder="12345678X" required
-                            class="w-full bg-brand-neutral/50 border @error('dni') border-primary @else border-gray-100 @enderror rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                        @error('dni')
-                            <p class="mt-2 text-[10px] font-bold text-primary uppercase tracking-wide px-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <x-ui.input label="Full Name" name="name" :value="old('name')" placeholder="Leonardo Da Vinci" required />
+                    <x-ui.input label="DNI / ID Number" name="dni" :value="old('dni')" placeholder="12345678X" required />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="phone_number" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Phone Number</label>
-                        <input type="tel" id="phone_number" name="phone_number" value="{{ old('phone_number') }}" placeholder="+34 600 000 000" 
-                            class="w-full bg-brand-neutral/50 border @error('phone_number') border-primary @else border-gray-100 @enderror rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                        @error('phone_number')
-                            <p class="mt-2 text-[10px] font-bold text-primary uppercase tracking-wide px-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="email" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Email Address</label>
-                        <input type="email" id="email" name="email" value="{{ old('email') }}" placeholder="leo@artisanal.com" required
-                            class="w-full bg-brand-neutral/50 border @error('email') border-primary @else border-gray-100 @enderror rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                        @error('email')
-                            <p class="mt-2 text-[10px] font-bold text-primary uppercase tracking-wide px-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                    <x-ui.input label="Phone Number" name="phone_number" type="tel" :value="old('phone_number')" placeholder="+34 600 000 000" />
+                    <x-ui.input label="Email Address" name="email" type="email" :value="old('email')" placeholder="leo@artisanal.com" required />
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label for="password" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Password</label>
-                        <input type="password" id="password" name="password" placeholder="••••••••" required
-                            class="w-full bg-brand-neutral/50 border @error('password') border-primary @else border-gray-100 @enderror rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                        @error('password')
-                            <p class="mt-2 text-[10px] font-bold text-primary uppercase tracking-wide px-1">{{ $message }}</p>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="password_confirmation" class="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2 px-1">Confirm Password</label>
-                        <input type="password" id="password_confirmation" name="password_confirmation" placeholder="••••••••" required
-                            class="w-full bg-brand-neutral/50 border border-gray-100 rounded-2xl px-5 py-4 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all font-medium text-gray-700">
-                    </div>
+                    <x-ui.input label="Password" name="password" type="password" placeholder="••••••••" required />
+                    <x-ui.input label="Confirm Password" name="password_confirmation" type="password" placeholder="••••••••" required />
                 </div>
 
                 <div class="flex items-start px-1 pt-2">
@@ -78,10 +39,9 @@
                     </label>
                 </div>
 
-                <button type="submit" class="w-full bg-primary text-white py-5 rounded-2xl font-black text-sm uppercase tracking-[0.2em] shadow-xl shadow-red-900/20 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-3">
-                    @svg('fas-user-plus', ['class' => 'w-4 h-4'])
+                <x-ui.button type="submit" variant="primary" icon="fas-user-plus" fullWidth>
                     Create Account
-                </button>
+                </x-ui.button>
             </form>
 
             <!-- Footer -->
