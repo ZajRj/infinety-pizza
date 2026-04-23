@@ -13,10 +13,10 @@
 
             <!-- Center: Navigation Links -->
             <div class="hidden sm:flex items-center justify-center space-x-10 flex-1">
-                <a href="#menu" class="text-sm font-semibold text-brand-primary border-b-2 border-brand-primary pb-1">Menu</a>
-                <a href="#specials" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">Specials</a>
-                <a href="#about" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">Our Story</a>
-                <a href="#locations" class="text-sm font-semibold text-gray-500 hover:text-gray-900 transition-colors">Locations</a>
+                <a href="#hero" class="text-sm font-semibold text-brand-primary border-b-2 border-brand-primary pb-1 transition-all">Home</a>
+                <a href="#menu" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Menu</a>
+                <a href="#about" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Our Story</a>
+                <a href="#locations" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Locations</a>
             </div>
 
             <!-- Right: Actions -->
@@ -33,7 +33,7 @@
                 </a>
 
                 <!-- Order Button -->
-                <a href="#menu" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
+                <a href="#todo" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
                     Order Now
                 </a>
 

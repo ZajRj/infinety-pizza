@@ -1,4 +1,4 @@
-<div class="relative overflow-hidden pt-4 pb-12"
+<div id="hero" class="relative overflow-hidden pt-4 pb-12"
     style="background-color: #ffffff; background-image: radial-gradient(#d1d5db 1.5px, transparent 1.5px); background-size: 40px 40px;">
 
     <!-- LARGE BACKGROUND GLOBS (Outside the banner) -->
