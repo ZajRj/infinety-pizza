@@ -24,9 +24,11 @@ class OrderService
             // 2. Create Order Details
             if (!empty($data['orderDetails'])) {
                 foreach ($data['orderDetails'] as $item) {
+                    $pizza = Pizza::find($item['pizza_id']);
                     $order->orderDetails()->create([
                         'pizza_id' => $item['pizza_id'],
-                        'price' => $item['price'] ?? Pizza::find($item['pizza_id'])?->price ?? 0,
+                        'pizza_name' => $pizza?->name ?? 'Unknown Pizza',
+                        'price' => $item['price'] ?? $pizza?->price ?? 0,
                         'quantity' => $item['quantity'] ?? 1,
                         'observations' => $item['observations'] ?? null,
                     ]);
@@ -54,9 +56,11 @@ class OrderService
             if (isset($data['orderDetails'])) {
                 $order->orderDetails()->delete();
                 foreach ($data['orderDetails'] as $item) {
+                    $pizza = Pizza::find($item['pizza_id']);
                     $order->orderDetails()->create([
                         'pizza_id' => $item['pizza_id'],
-                        'price' => $item['price'] ?? Pizza::find($item['pizza_id'])?->price ?? 0,
+                        'pizza_name' => $pizza?->name ?? 'Unknown Pizza',
+                        'price' => $item['price'] ?? $pizza?->price ?? 0,
                         'quantity' => $item['quantity'] ?? 1,
                         'observations' => $item['observations'] ?? null,
                     ]);
