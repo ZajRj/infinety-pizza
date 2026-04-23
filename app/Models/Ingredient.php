@@ -14,7 +14,13 @@ class Ingredient extends Model
         'name',
         'description',
         'image',
+        'ingredient_category_id',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(IngredientCategory::class, 'ingredient_category_id');
+    }
 
     public function pizzas()
     {

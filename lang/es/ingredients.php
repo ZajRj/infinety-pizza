@@ -7,6 +7,7 @@ return [
         'name' => 'Nombre',
         'description' => 'Descripción',
         'image' => 'Imagen',
+        'ingredient_category_id' => 'Categoría',
     ],
     'placeholders' => [
         'name' => 'ej. Pepperoni',

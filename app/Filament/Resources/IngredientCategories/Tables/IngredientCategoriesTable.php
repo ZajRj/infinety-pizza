@@ -1,38 +1,28 @@
 <?php
 
-namespace App\Filament\Resources\Ingredients\Tables;
+namespace App\Filament\Resources\IngredientCategories\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-class IngredientsTable
+class IngredientCategoriesTable
 {
     public static function configure(Table $table): Table
     {
         return $table
             ->columns([
-                ImageColumn::make('image')
-                    ->label(__('ingredients.fields.image'))
-                    ->circular(),
-
                 TextColumn::make('name')
-                    ->label(__('ingredients.fields.name'))
-                    ->searchable(),
-
-
+                    ->label(__('ingredient_categories.fields.name'))
+                    ->searchable()
+                    ->sortable(),
+                
                 TextColumn::make('description')
-                    ->label(__('ingredients.fields.description'))
+                    ->label(__('ingredient_categories.fields.description'))
+                    ->limit(50)
                     ->searchable(),
-
-
-                TextColumn::make('category.name')
-                    ->label(__('ingredients.fields.ingredient_category_id'))
-                    ->badge()
-                    ->color('info'),
 
                 TextColumn::make('created_at')
                     ->label(__('generic.fields.created_at'))

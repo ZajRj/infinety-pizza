@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Ingredients\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Grid;
 use Filament\Schemas\Components\Group;
@@ -34,11 +35,26 @@ class IngredientForm
                                 ]),
 
                             Group::make([
-                                TextInput::make('name')
-                                    ->label(__('ingredients.fields.name'))
-                                    ->required()
-                                    ->maxLength(255)
-                                    ->placeholder(__('ingredients.placeholders.name')),
+                                Grid::make(2)
+                                    ->schema([
+                                        TextInput::make('name')
+                                            ->label(__('ingredients.fields.name'))
+                                            ->required()
+                                            ->maxLength(255)
+                                            ->placeholder(__('ingredients.placeholders.name')),
+
+                                        Select::make('ingredient_category_id')
+                                            ->label(__('ingredients.fields.ingredient_category_id'))
+                                            ->relationship('category', 'name')
+                                            ->searchable()
+                                            ->preload()
+                                            ->createOptionForm([
+                                                TextInput::make('name')
+                                                    ->required()
+                                                    ->maxLength(255),
+                                                Textarea::make('description'),
+                                            ]),
+                                    ]),
 
                                 Textarea::make('description')
                                     ->label(__('ingredients.fields.description'))
