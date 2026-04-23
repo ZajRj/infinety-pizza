@@ -11,4 +11,9 @@ class CreateOrder extends CreateRecord
     use RedirectsToIndex;
 
     protected static string $resource = OrderResource::class;
+
+    protected function handleRecordCreation(array $data): \Illuminate\Database\Eloquent\Model
+    {
+        return app(\App\Services\OrderService::class)->createOrder($data);
+    }
 }

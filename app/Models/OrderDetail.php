@@ -14,6 +14,7 @@ class OrderDetail extends Model
         'order_id',
         'pizza_id',
         'price',
+        'quantity',
         'observations',
     ];
 

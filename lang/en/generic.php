@@ -6,6 +6,7 @@ return [
         'updated_at' => 'Updated At',
         'id' => 'ID',
         'observations' => 'Observations',
+        'quantity' => 'Quantity',
     ],
     'sections' => [
         'details' => 'General Details',

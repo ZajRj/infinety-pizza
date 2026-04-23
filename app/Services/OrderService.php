@@ -1,0 +1,81 @@
+<?php
+
+namespace App\Services;
+
+use App\Models\Order;
+use App\Models\Pizza;
+use Illuminate\Support\Facades\DB;
+
+class OrderService
+{
+    /**
+     * Create a new order with its details.
+     */
+    public function createOrder(array $data): Order
+    {
+        return DB::transaction(function () use ($data) {
+            // 1. Create the Order
+            $order = Order::create([
+                'user_id' => $data['user_id'],
+                'status' => $data['status'],
+                'total' => $this->calculateTotal($data['orderDetails'] ?? []),
+            ]);
+
+            // 2. Create Order Details
+            if (!empty($data['orderDetails'])) {
+                foreach ($data['orderDetails'] as $item) {
+                    $order->orderDetails()->create([
+                        'pizza_id' => $item['pizza_id'],
+                        'price' => $item['price'] ?? Pizza::find($item['pizza_id'])?->price ?? 0,
+                        'quantity' => $item['quantity'] ?? 1,
+                        'observations' => $item['observations'] ?? null,
+                    ]);
+                }
+            }
+
+            return $order;
+        });
+    }
+
+    /**
+     * Update an existing order.
+     */
+    public function updateOrder(Order $order, array $data): Order
+    {
+        return DB::transaction(function () use ($order, $data) {
+            // Update main order
+            $order->update([
+                'user_id' => $data['user_id'] ?? $order->user_id,
+                'status' => $data['status'] ?? $order->status,
+                'total' => $this->calculateTotal($data['orderDetails'] ?? []),
+            ]);
+
+            // Sync Order Details (Simple approach: delete and recreate)
+            if (isset($data['orderDetails'])) {
+                $order->orderDetails()->delete();
+                foreach ($data['orderDetails'] as $item) {
+                    $order->orderDetails()->create([
+                        'pizza_id' => $item['pizza_id'],
+                        'price' => $item['price'] ?? Pizza::find($item['pizza_id'])?->price ?? 0,
+                        'quantity' => $item['quantity'] ?? 1,
+                        'observations' => $item['observations'] ?? null,
+                    ]);
+                }
+            }
+
+            return $order;
+        });
+    }
+
+    /**
+     * Calculate the total amount for the order items.
+     */
+    public function calculateTotal(array $items): float
+    {
+        return collect($items)->reduce(function ($total, $item) {
+            $quantity = $item['quantity'] ?? 1;
+            $price = $item['price'] ?? 0;
+            return $total + ($price * $quantity);
+        }, 0);
+    }
+}

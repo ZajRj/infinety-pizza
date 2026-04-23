@@ -14,6 +14,12 @@ class EditOrder extends EditRecord
 
     protected static string $resource = OrderResource::class;
 
+    protected function handleRecordUpdate(\Illuminate\Database\Eloquent\Model $record, array $data): \Illuminate\Database\Eloquent\Model
+    {
+        /** @var \App\Models\Order $record */
+        return app(\App\Services\OrderService::class)->updateOrder($record, $data);
+    }
+
     protected function getHeaderActions(): array
     {
         return [

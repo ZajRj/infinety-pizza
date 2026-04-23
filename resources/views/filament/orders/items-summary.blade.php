@@ -50,6 +50,16 @@
         color: rgb(var(--gray-950));
         margin: 0;
     }
+    .pizza-price-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    .pizza-quantity {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: rgb(var(--gray-500));
+    }
     .pizza-price {
         font-size: 1.1rem;
         font-weight: 900;
@@ -85,6 +95,9 @@
     @forelse($items as $item)
         @php
             $pizza = Pizza::find($item['pizza_id'] ?? null);
+            $qty = intval($item['quantity'] ?? 1);
+            $price = floatval($item['price'] ?? 0);
+            $subtotal = $qty * $price;
         @endphp
         @if($pizza)
             <div class="pizza-card">
@@ -102,7 +115,12 @@
                 <div class="pizza-info">
                     <div class="pizza-header">
                         <h4 class="pizza-name truncate">{{ $pizza->name }}</h4>
-                        <span class="pizza-price">$ {{ number_format($item['price'] ?? 0, 2) }}</span>
+                        <div class="pizza-price-group">
+                            @if($qty > 1)
+                                <span class="pizza-quantity">{{ $qty }} x ${{ number_format($price, 2) }}</span>
+                            @endif
+                            <span class="pizza-price">$ {{ number_format($subtotal, 2) }}</span>
+                        </div>
                     </div>
                     
                     <p class="pizza-desc truncate">{{ $pizza->description }}</p>

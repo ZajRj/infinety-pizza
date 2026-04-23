@@ -6,6 +6,7 @@ return [
         'updated_at' => 'Actualizado el',
         'id' => 'ID',
         'observations' => 'Observaciones',
+        'quantity' => 'Cantidad',
     ],
     'sections' => [
         'details' => 'Detalles Generales',

@@ -78,13 +78,23 @@ class OrderForm
                                         ->live()
                                         ->afterStateUpdated(fn ($get, $set) => static::updateTotal($get, $set)),
 
+                                    TextInput::make('quantity')
+                                        ->label(__('generic.fields.quantity'))
+                                        ->numeric()
+                                        ->default(1)
+                                        ->minValue(1)
+                                        ->required()
+                                        ->live()
+                                        ->afterStateUpdated(fn ($get, $set) => static::updateTotal($get, $set)),
+
                                     TextInput::make('observations')
                                         ->label(__('generic.fields.observations'))
                                         ->placeholder('e.g. No onions')
                                         ->maxLength(255)
+                                        ->columnSpan(2)
                                         ->live(),
                                 ])
-                                ->columns(3)
+                                ->columns(4)
                                 ->defaultItems(1)
                                 ->live()
                                 ->afterStateUpdated(fn ($get, $set) => static::updateTotal($get, $set)),
@@ -121,7 +131,12 @@ class OrderForm
     {
         // Inside repeater, we need to go up to find 'orderDetails'
         $items = $get('orderDetails') ?? $get('../../orderDetails') ?? [];
-        $total = collect($items)->sum('price');
+        
+        $total = collect($items)->reduce(function ($total, $item) {
+            $price = floatval($item['price'] ?? 0);
+            $quantity = intval($item['quantity'] ?? 1);
+            return $total + ($price * $quantity);
+        }, 0);
         
         // Update both levels to be sure
         $set('total', $total);
