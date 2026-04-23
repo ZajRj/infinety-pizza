@@ -19,6 +19,6 @@ return [
     ],
     'menu' => [
         'shop' => 'Shop',
-        'managing' => 'Gestión',
+        'managing' => 'Managing',
     ],
 ];
