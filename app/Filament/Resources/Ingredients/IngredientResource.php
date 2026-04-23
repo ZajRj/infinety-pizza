@@ -20,7 +20,17 @@ class IngredientResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
 
-    protected static ?string $recordTitleAttribute = 'Ingrediente';
+    public static function getModelLabel(): string
+    {
+        return __('ingredients.title');
+    }
+
+    public static function getPluralModelLabel(): string
+    {
+        return __('ingredients.plural');
+    }
+
+    protected static ?string $recordTitleAttribute = 'name';
 
     public static function form(Schema $schema): Schema
     {

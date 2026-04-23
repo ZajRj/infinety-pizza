@@ -16,20 +16,25 @@ class IngredientsTable
         return $table
             ->columns([
                 ImageColumn::make('image')
+                    ->label(__('ingredients.fields.image'))
                     ->circular(),
 
                 TextColumn::make('name')
+                    ->label(__('ingredients.fields.name'))
                     ->searchable(),
                     
                 TextColumn::make('description')
+                    ->label(__('ingredients.fields.description'))
                     ->searchable(),
 
                 TextColumn::make('created_at')
+                    ->label(__('generic.fields.created_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
+                    ->label(__('generic.fields.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

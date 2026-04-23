@@ -16,13 +16,14 @@ class IngredientForm
     {
         return $schema
             ->components([
-                Section::make('Ingredient Details')
-                    ->description('General information and visual representation.')
+                Section::make(__('ingredients.sections.details'))
+                    ->description(__('ingredients.sections.details_description'))
                     ->icon('heroicon-m-information-circle')
                     ->schema([
                         Grid::make(12)
                         ->schema([
                             FileUpload::make('image')
+                                ->label(__('ingredients.fields.image'))
                                 ->image()
                                 ->avatar()
                                 ->imageEditor()
@@ -34,13 +35,15 @@ class IngredientForm
 
                             Group::make([
                                 TextInput::make('name')
+                                    ->label(__('ingredients.fields.name'))
                                     ->required()
                                     ->maxLength(255)
-                                    ->placeholder('e.g. Pepperoni'),
+                                    ->placeholder(__('ingredients.placeholders.name')),
 
                                 Textarea::make('description')
+                                    ->label(__('ingredients.fields.description'))
                                     ->rows(4)
-                                    ->placeholder('Describe the ingredient...')
+                                    ->placeholder(__('ingredients.placeholders.description'))
                                     ->columnSpanFull(),
                             ])->columnSpan([
                                 'default' => 12,
