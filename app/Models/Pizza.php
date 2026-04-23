@@ -13,6 +13,11 @@ class Pizza extends Model
     /** @use HasFactory<\Database\Factories\PizzaFactory> */
     use HasFactory, SoftDeletes;
 
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
     protected $fillable = [
         'category_id',
         'name',

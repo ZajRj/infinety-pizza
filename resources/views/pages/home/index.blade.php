@@ -26,25 +26,26 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Select links inside the navigation that point to local IDs
-            const navLinks = document.querySelectorAll('nav a[href^="#"]');
-            const sections = document.querySelectorAll('#hero, #menu, #locations, #specials, #about');
+            const sections = document.querySelectorAll('#hero, #menu, #about, #locations');
+            const navLinks = document.querySelectorAll('nav a[href*="#"]');
 
-            // The classes you are using for Active and Inactive states
+            // Exact classes from the previous consistent design
             const activeClasses = ['text-brand-primary', 'border-brand-primary'];
             const inactiveClasses = ['text-gray-500', 'border-transparent'];
 
             function setActiveLink(id) {
                 navLinks.forEach(link => {
-                    const href = link.getAttribute('href').substring(1);
-                    const isCurrent = href === id;
+                    const dataLink = link.getAttribute('data-nav-link');
+                    const isCurrent = dataLink === id;
                     
                     if (isCurrent) {
                         link.classList.add(...activeClasses);
                         link.classList.remove(...inactiveClasses);
+                        link.classList.remove('hover:text-gray-900');
                     } else {
                         link.classList.remove(...activeClasses);
                         link.classList.add(...inactiveClasses);
+                        link.classList.add('hover:text-gray-900');
                     }
                 });
             }
@@ -68,22 +69,34 @@
                 if (section) observer.observe(section);
             });
 
+            // Fallback for the top of the page
+            window.addEventListener('scroll', () => {
+                if (window.scrollY < 100) {
+                    setActiveLink('hero');
+                }
+            });
+
             // Smooth scrolling for navigation links
             navLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
+                    const href = this.getAttribute('href');
                     
-                    if (targetElement) {
-                        const offset = 80;
-                        const elementPosition = targetElement.getBoundingClientRect().top;
-                        const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    // If the link is just a hash (or points to the current page + hash)
+                    if (href.includes('#')) {
+                        const targetId = href.split('#')[1];
+                        const targetElement = document.getElementById(targetId);
+                        
+                        if (targetElement) {
+                            e.preventDefault();
+                            const offset = 80;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - offset;
 
-                        window.scrollTo({
-                            top: offsetPosition,
-                            behavior: 'smooth'
-                        });
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                        }
                     }
                 });
             });

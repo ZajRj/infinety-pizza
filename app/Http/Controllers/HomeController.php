@@ -26,4 +26,19 @@ class HomeController extends Controller
 
         return view('pages.home.index', compact('categories', 'pizzas', 'featuredPizzas'));
     }
+
+     public function show(Pizza $pizza)
+    {
+        $pizza->load(['category', 'ingredients']);
+
+        $relatedPizzas = Pizza::where('category_id', $pizza->category_id)
+            ->where('id', '!=', $pizza->id)
+            ->where('is_active', true)
+            ->with(['category', 'ingredients'])
+            ->inRandomOrder()
+            ->take(3)
+            ->get();
+
+        return view('pages.products.show', compact('pizza', 'relatedPizzas'));
+    }
 }

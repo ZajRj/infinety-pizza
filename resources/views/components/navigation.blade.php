@@ -4,7 +4,7 @@
             
             <!-- Left: Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="/" class="flex items-center gap-2 group">
+                <a href="{{ route('home') }}" class="flex items-center gap-2 group">
                     <span class="text-xl font-bold text-brand-primary tracking-tight font-heading">
                         Infinety <span class="text-gray-900 group-hover:text-brand-primary transition-colors">Pizza Co.</span>
                     </span>
@@ -13,10 +13,10 @@
 
             <!-- Center: Navigation Links -->
             <div class="hidden sm:flex items-center justify-center space-x-10 flex-1">
-                <a href="#hero" class="text-sm font-semibold text-brand-primary border-b-2 border-brand-primary pb-1 transition-all">Home</a>
-                <a href="#menu" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Menu</a>
-                <a href="#about" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Our Story</a>
-                <a href="#locations" class="text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Locations</a>
+                <a href="{{ route('home') }}#hero" data-nav-link="hero" class="nav-link text-sm font-semibold text-brand-primary border-b-2 border-brand-primary pb-1 transition-all">Home</a>
+                <a href="{{ route('home') }}#menu" data-nav-link="menu" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Menu</a>
+                <a href="{{ route('home') }}#about" data-nav-link="about" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Our Story</a>
+                <a href="{{ route('home') }}#locations" data-nav-link="locations" class="nav-link text-sm font-semibold text-gray-500 hover:text-gray-900 border-b-2 border-transparent pb-1 transition-all">Locations</a>
             </div>
 
             <!-- Right: Actions -->
@@ -33,7 +33,7 @@
                 </a>
 
                 <!-- Order Button -->
-                <a href="#todo" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
+                <a href="{{ route('home') }}#menu" class="hidden sm:block bg-primary text-white px-6 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-primary/20 hover:scale-105 active:scale-95 transition-all">
                     Order Now
                 </a>
 

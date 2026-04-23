@@ -6,10 +6,12 @@
         class="absolute top-0 right-0 w-12 h-12 bg-primary/5 rounded-full -mr-6 -mt-6 group-hover:scale-150 transition-transform">
     </div>
 
-    <div class="w-16 h-16 flex-shrink-0 bg-gray-50 rounded-xl overflow-hidden relative z-10">
-        <img src="{{ asset('storage/' . ($pizza->images[0] ?? 'pizzas/placeholder.png')) }}" alt="{{ $pizza->name }}"
-            class="w-full h-full object-cover">
-    </div>
+    <a href="{{ route('pizzas.show', $pizza) }}" class="block">
+        <div class="w-16 h-16 flex-shrink-0 bg-gray-50 rounded-xl overflow-hidden relative z-10">
+            <img src="{{ asset('storage/' . ($pizza->images[0] ?? 'pizzas/placeholder.png')) }}" alt="{{ $pizza->name }}"
+                class="w-full h-full object-cover">
+        </div>
+    </a>
 
     <div class="flex-1 min-w-0 relative z-10">
         <div class="flex flex-col mb-2">
