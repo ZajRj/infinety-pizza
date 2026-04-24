@@ -37,6 +37,9 @@ class OrderService
                 }
             }
 
+            $order = $order->load(['orderDetails.pizza.ingredients', 'user']);
+            event(new \App\Events\OrderCreated($order));
+
             return $order;
         });
     }

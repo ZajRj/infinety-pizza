@@ -27,10 +27,7 @@ class SendOrderConfirmationEmail implements ShouldQueue
         $order = $event->order;
         $customer = $order->user;
 
-        // Log it for now to prove it works
-        Log::info("Sending order confirmation email for Order #{$order->id} to {$customer->email}");
-
-        // In a real app:
-        // Mail::to($customer->email)->send(new OrderConfirmationMail($order));
+        // Send the confirmation email
+        \Illuminate\Support\Facades\Mail::to($customer->email)->send(new \App\Mail\OrderConfirmation($order));
     }
 }
