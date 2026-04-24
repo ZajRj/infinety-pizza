@@ -6,7 +6,7 @@
                     Infinety <span class="text-white not-italic">Pizza</span>
                 </span>
                 <p class="text-gray-400 max-w-sm mb-6">
-                    Llevamos el sabor de la verdadera pizza artesanal a tu mesa. Ingredientes frescos, masa madre y mucha pasión en cada rebanada.
+                    {{ __('Bringing the taste of real artisanal pizza to your table. Fresh ingredients, sourdough, and lots of passion in every slice.') }}
                 </p>
                 <div class="flex gap-4">
                     <!-- Social icons would go here -->
@@ -14,31 +14,31 @@
             </div>
 
             <div>
-                <h4 class="text-lg font-bold mb-6 font-heading uppercase tracking-wider">Explorar</h4>
-                <ul class="space-y-4 text-gray-400">
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Nuestra Carta</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Promociones</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Locales</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Contacto</a></li>
+                <h4 class="text-lg font-bold mb-6 font-heading uppercase tracking-wider">{{ __('Explore') }}</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="{{ route('home') }}#menu" class="hover:text-brand-primary transition-colors">{{ __('Menu') }}</a></li>
+                    <li><a href="{{ route('home') }}#menu" class="hover:text-brand-primary transition-colors">{{ __('Promotions') }}</a></li>
+                    <li><a href="{{ route('home') }}#locations" class="hover:text-brand-primary transition-colors">{{ __('Locations') }}</a></li>
+                    <li><a href="https://wa.me/584244289888" target="_blank" class="hover:text-brand-primary transition-colors">{{ __('Contact') }}</a></li>
                 </ul>
             </div>
 
             <div>
-                <h4 class="text-lg font-bold mb-6 font-heading uppercase tracking-wider">Legal</h4>
-                <ul class="space-y-4 text-gray-400">
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Términos y Condiciones</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Privacidad</a></li>
-                    <li><a href="#" class="hover:text-brand-primary transition-colors">Cookies</a></li>
+                <h4 class="text-lg font-bold mb-6 font-heading uppercase tracking-wider">{{ __('Legal') }}</h4>
+                <ul class="space-y-4 text-gray-400 text-sm">
+                    <li><a href="#" class="hover:text-brand-primary transition-colors">{{ __('Terms & Conditions') }}</a></li>
+                    <li><a href="#" class="hover:text-brand-primary transition-colors">{{ __('Privacy') }}</a></li>
+                    <li><a href="#" class="hover:text-brand-primary transition-colors">{{ __('Cookies') }}</a></li>
                 </ul>
             </div>
         </div>
 
         <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p class="text-gray-500 text-sm">
-                &copy; {{ date('Y') }} Infinety Pizza. Todos los derechos reservados.
+            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest">
+                &copy; {{ date('Y') }} Infinety Pizza. {{ __('All rights reserved.') }}
             </p>
-            <p class="text-gray-500 text-sm flex items-center gap-1">
-                Hecho con <span class="text-brand-primary">❤️</span> para amantes de la pizza.
+            <p class="text-gray-500 text-[10px] font-bold uppercase tracking-widest flex items-center gap-1">
+                {{ __('Made with ❤️ for pizza lovers.') }} by ZajRj
             </p>
         </div>
     </div>
