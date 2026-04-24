@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Pizza;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Cache;
 
 class Menu extends Component
 {
@@ -28,16 +29,23 @@ class Menu extends Component
 
     public function render()
     {
-        $categories = Category::where('is_active', true)->get();
+        // Cache categories for 1 hour
+        $categories = Cache::remember('menu_categories', 3600, function () {
+            return Category::all();
+        });
 
-        $query = Pizza::where('is_active', true)
-            ->with(['category', 'ingredients']);
+        // Cache pizzas based on category and page for 1 hour
+        $cacheKey = "menu_pizzas_cat_{$this->categoryId}_page_" . $this->getPage();
+        
+        $pizzas = Cache::remember($cacheKey, 3600, function () {
+            $query = Pizza::query()->with('category');
 
-        if ($this->categoryId) {
-            $query->where('category_id', $this->categoryId);
-        }
+            if ($this->categoryId) {
+                $query->where('category_id', $this->categoryId);
+            }
 
-        $pizzas = $query->latest()->paginate(8);
+            return $query->latest()->paginate(6);
+        });
 
         return view('livewire.home.menu', [
             'categories' => $categories,

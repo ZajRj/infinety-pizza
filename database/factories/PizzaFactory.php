@@ -1,0 +1,32 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Category;
+use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Pizza>
+ */
+class PizzaFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        $name = $this->faker->unique()->sentence(2);
+        return [
+            'category_id' => Category::factory(),
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'description' => $this->faker->paragraph(),
+            'price' => $this->faker->randomFloat(2, 8, 25),
+            'is_active' => true,
+            'images' => ['pizzas/placeholder.png'],
+        ];
+    }
+}

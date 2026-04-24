@@ -13,10 +13,10 @@
                 <div class="w-20 h-20 bg-primary/5 rounded-3xl flex items-center justify-center mx-auto mb-6">
                     @svg('fas-key', ['class' => 'w-8 h-8 text-primary opacity-50'])
                 </div>
-                <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">Password Recovery</span>
-                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none mb-4">Forgot <span class="text-primary italic">Secret?</span></h2>
+                <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">{{ __('auth.forgot_password_title') }}</span>
+                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none mb-4">{{ __('Forgot') }} <span class="text-primary italic">{{ __('Secret?') }}</span></h2>
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wide leading-relaxed">
-                    No worries! Enter your email and we'll send you a link to reset it.
+                    {{ __('auth.forgot_password_subtitle') }}
                 </p>
             </div>
 
@@ -24,7 +24,7 @@
             <form action="{{ route('password.email') }}" method="POST" class="space-y-6">
                 @csrf
                 <x-ui.input 
-                    label="Email Address" 
+                    :label="__('auth.email')" 
                     name="email" 
                     type="email" 
                     placeholder="leo@artisanal.com" 
@@ -33,15 +33,15 @@
                 />
 
                 <x-ui.button type="submit" variant="primary" icon="fas-paper-plane" fullWidth>
-                    Send Reset Link
+                    {{ __('auth.send_reset_link') }}
                 </x-ui.button>
             </form>
 
             <!-- Footer -->
             <div class="mt-10 text-center">
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wide">
-                    Remembered it? 
-                    <a href="{{ route('login') }}" class="text-primary hover:underline ml-1">Sign in here</a>
+                    {{ __('Remembered it?') }} 
+                    <a href="{{ route('login') }}" class="text-primary hover:underline ml-1">{{ __('auth.sign_in_here') }}</a>
                 </p>
             </div>
         </div>

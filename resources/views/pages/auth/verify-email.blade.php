@@ -15,17 +15,17 @@
 
             <!-- Header -->
             <div class="mb-8">
-                <span class="text-tertiary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">Verify Your Email</span>
-                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none mb-4">Check Your <span class="text-primary italic">Inbox</span></h2>
+                <span class="text-tertiary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">{{ __('auth.verify_email_title') }}</span>
+                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none mb-4">{{ __('Check Your') }} <span class="text-primary italic">{{ __('Inbox') }}</span></h2>
                 <p class="text-xs font-bold text-gray-400 uppercase tracking-wide leading-relaxed">
-                    Thanks for joining the family! Before we get started, please click the link we just sent to your email.
+                    {{ __('auth.verify_email_subtitle') }}
                 </p>
             </div>
 
             @if (session('status') == 'verification-link-sent')
                 <div class="mb-8 bg-tertiary/5 border border-tertiary/10 p-4 rounded-2xl">
                     <p class="text-[10px] font-black text-tertiary uppercase tracking-widest">
-                        A new verification link has been sent!
+                        {{ __('auth.verify_email_sent') }}
                     </p>
                 </div>
             @endif
@@ -34,7 +34,7 @@
             <form action="{{ route('verification.send') }}" method="POST" class="space-y-4">
                 @csrf
                 <x-ui.button type="submit" variant="primary" fullWidth>
-                    Resend Email
+                    {{ __('auth.resend_verification') }}
                 </x-ui.button>
             </form>
 
@@ -42,7 +42,7 @@
             <form action="{{ route('logout') }}" method="POST" class="mt-8">
                 @csrf
                 <x-ui.button type="submit" variant="white" size="sm">
-                    Sign Out
+                    {{ __('auth.back_to_login') }}
                 </x-ui.button>
             </form>
 

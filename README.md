@@ -1,66 +1,84 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Infinety Pizza - Evaluación Técnica v2.0 
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este repositorio contiene la solución a la **Evaluación Técnica v2.0 de Infinety**, consistente en el desarrollo de una aplicación integral de gestión de pizzas artesanales. El proyecto demuestra el uso de arquitectura limpia, patrones de diseño modernos y las mejores prácticas del ecosistema Laravel.
 
-## About Laravel
+## Resumen del Proyecto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+**Infinitey Pizza** es una plataforma de comercio electrónico premium que gestiona el ciclo de vida completo de un pedido artesanal. Desde la exploración de productos con ingredientes detallados hasta el procesamiento en segundo plano de confirmaciones y un panel administrativo con indicadores clave de negocio.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Stack Tecnológico
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Framework**: Laravel 12.x (PHP 8.2+)
+- **Frontend**: Livewire 4, AlpineJS
+- **Panel Administrativo**: Filament v4
+- **Estilizado**: Tailwind CSS
+- **Colas y Notificaciones**: Database Queue Driver + SMTP (Log) Mailer.
+- **Base de Datos**: MySQL (con soporte para Soft Deletes).
 
-## Learning Laravel
+### Justificación de elección: Livewire
+Se ha seleccionado **Livewire** para el frontend del cliente por su integración nativa y fluida con **Filament**, permitiendo mantener un stack tecnológico unificado (**TALL stack**). Esto facilita la reutilización de componentes de UI, simplifica el manejo del estado reactivo sin la complejidad de una SPA tradicional y optimiza los tiempos de desarrollo manteniendo un alto nivel de interactividad y rendimiento.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Módulos y Requisitos Cumplidos
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 1. Base de Datos y Modelos
+- **Migraciones**: Estructura completa para `users`, `pizzas`, `ingredients`, `categories` y `orders`.
+- **Relaciones**: Uso extensivo de Eloquent (`BelongsTo`, `HasMany`, `BelongsToMany`).
+- **Eliminación Lógica**: Implementado `SoftDeletes` en los modelos de `Pizza`, `Ingredient` y `Category`.
+- **Estados de Pedido**: Gestión de estados mediante el enum `OrderStatus` (Pending, Confirmed, Completed, Cancelled).
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 2. Autenticación y Seguridad
+- Implementado mediante **Laravel Fortify**.
+- Flujo completo: Registro, Login, Logout y **Verificación de Email**.
+- Rutas de checkout y perfil protegidas por middleware `auth`.
+- Acceso al Panel Administrativo restringido a usuarios con `is_admin = true`.
 
-## Laravel Sponsors
+### 3. Flujo de Pedidos (Eventos y Colas)
+- **Validación**: La creación de pedidos pasa por una capa de servicio (`OrderService`) con validación estricta.
+- **Evento**: Disparo de `OrderCreated` tras la persistencia.
+- **Listener/Job**: `SendOrderConfirmationEmail` (implementando `ShouldQueue`) delega el envío a la cola.
+- **Mailable**: Envío de correo `OrderConfirmation` con detalles de pizza e ingredientes.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 4. Observadores de Modelo
+- **OrderObserver**: Registrado en `AppServiceProvider`.
+- **Log de Creación**: Registra automáticamente cada nuevo pedido en los logs de Laravel.
+- **Lógica de Cancelación**: Detecta cambios de estado a `CANCELLED` y dispara el evento `OrderCancelled`.
 
-### Premium Partners
+### 5. Panel Administrativo (Filament)
+- **Gestión CRUD**: Control total sobre ingredientes, pizzas (con imágenes) y pedidos.
+- **Dashboard**: Indicadores en tiempo real:
+    - Pedidos del día.
+    - Pizza más solicitada (Most Sold Pizza).
+    - Total de usuarios registrados.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 6. Frontend y UX
+- **Catálogo**: Listado con imágenes premium, ingredientes y paginación personalizada.
+- **Caché**: Optimización de consultas frecuentes (menú y categorías) mediante `Cache::remember`.
+- **Historial**: Los usuarios pueden consultar sus últimos pedidos y estados desde su perfil.
 
-## Contributing
+## Pruebas y Calidad (Bonus)
+- **Feature Tests**: Suite completa para verificar la creación de pedidos y el filtrado del menú.
+- **Factories**: Generación de datos de prueba robustos para `Pizza`, `Category` y `User`.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Instalación y Puesta en Marcha
 
-## Code of Conduct
+1. Clonar el repositorio.
+2. Ejecutar `composer install` y `npm install && npm run dev`.
+3. Configurar el archivo `.env` (usar `.env.example` como base).
+4. Generar clave: `php artisan key:generate`.
+5. Ejecutar migraciones y seeders: `php artisan migrate --seed`.
+6. Iniciar el worker de colas: `php artisan queue:work`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Credenciales de Prueba (Admin)
 
-## Security Vulnerabilities
+- **Usuario**: `admin@infinety.com`
+- **Contraseña**: `password` (o la definida en el seeder).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Uso de IA y Asistencia (Antigravity)
 
-## License
+Se ha utilizado **Antigravity** como agente de IA avanzado para potenciar el desarrollo del proyecto, aplicando un criterio técnico riguroso en cada paso:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Automatización de Tareas Repetitivas**: Antigravity asistió en la generación de *boilerplate*, migraciones complejas y la creación de *factories*, permitiendo centrar el esfuerzo humano en las decisiones arquitectónicas y la lógica de negocio.
+- **Generación de Activos con IA**: Todas las imágenes de pizzas presentes en el catálogo y seeders han sido generadas mediante IA (DALL-E/Stability AI) a través de las herramientas de Antigravity. Esto evita el uso de *placeholders* genéricos y refuerza la estética premium y artesanal del proyecto.
+- **Mantenimiento de Contexto y Skills**: Se utilizaron *skills* y un manejo de contexto estructurado para asegurar que cada sugerencia de la IA fuera coherente con los patrones de diseño establecidos y el tono de marca.
+
+---

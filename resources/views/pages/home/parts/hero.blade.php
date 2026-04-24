@@ -27,9 +27,9 @@
 
                     <h1
                         class="text-5xl md:text-6xl font-black text-gray-900 leading-[0.85] mb-4 font-heading uppercase tracking-tighter">
-                        {{ __('Artesanal') }} <br>
-                        <span class="text-primary italic">{{ __('Flavor') }}</span> {{ __('for your') }} <br>
-                        {{ __('convenience') }}
+                        {{ __('Hero Title Part 1') }} <br>
+                        <span class="text-primary italic">{{ __('Hero Title Part 2') }}</span> {{ __('Hero Title Part 3') }} <br>
+                        {{ __('Hero Title Part 4') }}
                     </h1>
                     <p class="text-base text-gray-500 mb-6 max-w-sm font-medium leading-snug">
                         {{ __('Handcrafted with passion, fresh ingredients, and delivered straight to your door.') }}
