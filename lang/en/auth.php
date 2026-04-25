@@ -15,6 +15,8 @@ return [
     // UI Labels
     'login_title' => 'Welcome back!',
     'login_subtitle' => 'Sign in to your artisanal account',
+    'login_heading_1' => 'Login to',
+    'login_heading_2' => 'Infinety',
     'register_title' => 'Join the family',
     'register_subtitle' => 'Create your artisanal account',
     'forgot_password_title' => 'Forgot password?',
@@ -23,6 +25,8 @@ return [
     'reset_password_subtitle' => 'Enter your new artisanal password below.',
     'verify_email_title' => 'Verify email',
     'verify_email_subtitle' => 'Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you?',
+    'verify_email_heading_1' => 'Check Your',
+    'verify_email_heading_2' => 'Inbox',
     'verify_email_sent' => 'A new verification link has been sent to the email address you provided during registration.',
 
     'email' => 'Email Address',

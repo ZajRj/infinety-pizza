@@ -11,7 +11,7 @@
             <!-- Header -->
             <div class="text-center mb-10">
                 <span class="text-primary font-black uppercase tracking-[0.3em] text-[10px] mb-4 block">{{ __('auth.login_title') }}</span>
-                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none">{{ __('Login to') }} <span class="text-primary italic">Infinety</span></h2>
+                <h2 class="text-4xl font-black text-gray-900 font-heading uppercase tracking-tighter leading-none">{{ __('auth.login_heading_1') }} <span class="text-primary italic">{{ __('auth.login_heading_2') }}</span></h2>
             </div>
 
             <!-- Form -->

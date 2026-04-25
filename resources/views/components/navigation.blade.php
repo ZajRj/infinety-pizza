@@ -28,7 +28,7 @@
             <div class="flex items-center space-x-4">
                 <!-- Cart (Desktop Only) -->
                 <button @click="$dispatch('toggle-cart')"
-                    class="hidden md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
+                    class="hidden cursor-pointer md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
                     @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
                     <span x-data="{ count: {{ count(Session::get('cart', [])) }} }"
                         x-on:cart-updated.window="count = $event.detail.count || 0" x-text="count"

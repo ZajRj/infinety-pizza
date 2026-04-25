@@ -15,6 +15,8 @@ return [
     // UI Labels
     'login_title' => '¡Bienvenido de nuevo!',
     'login_subtitle' => 'Inicia sesión en tu cuenta artesanal',
+    'login_heading_1' => 'Inicia sesión en',
+    'login_heading_2' => 'Infinety',
     'register_title' => 'Únete a la familia',
     'register_subtitle' => 'Crea tu cuenta artesanal',
     'forgot_password_title' => '¿Olvidaste tu contraseña?',
@@ -23,6 +25,8 @@ return [
     'reset_password_subtitle' => 'Introduce tu nueva contraseña artesanal a continuación.',
     'verify_email_title' => 'Verificar correo',
     'verify_email_subtitle' => '¡Gracias por registrarte! Antes de comenzar, ¿podrías verificar tu dirección de correo electrónico haciendo clic en el enlace que te acabamos de enviar?',
+    'verify_email_heading_1' => 'Revisa tu',
+    'verify_email_heading_2' => 'Bandeja',
     'verify_email_sent' => 'Se ha enviado un nuevo enlace de verificación a la dirección de correo electrónico que proporcionaste durante el registro.',
 
     'email' => 'Correo Electrónico',
