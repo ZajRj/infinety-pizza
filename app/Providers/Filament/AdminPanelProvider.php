@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile()
             ->brandName('Infinitey Pizza')
             ->colors([
                 'primary' => '#D32F2F',    // Brand Red

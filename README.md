@@ -61,17 +61,55 @@ Se ha seleccionado **Livewire** para el frontend del cliente por su integración
 
 ## Instalación y Puesta en Marcha
 
-1. Clonar el repositorio.
-2. Ejecutar `composer install` y `npm install && npm run dev`.
-3. Configurar el archivo `.env` (usar `.env.example` como base).
-4. Generar clave: `php artisan key:generate`.
-5. Ejecutar migraciones y seeders: `php artisan migrate --seed`.
-6. Iniciar el worker de colas: `php artisan queue:work`.
+Para ejecutar este proyecto en un entorno local (como **Laragon**, **XAMPP** o similar), siga estos pasos:
+
+1. **Clonar el repositorio**:
+   ```bash
+   git clone <url-del-repositorio>
+   cd infinety-pizza
+   ```
+
+2. **Instalar dependencias**:
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Configurar el entorno**:
+   - Cree su archivo `.env` a partir del ejemplo: `cp .env.example .env`.
+   - Configure su base de datos local en el `.env` (usualmente `DB_HOST=127.0.0.1` y `DB_USERNAME=root` en Laragon).
+   - Genere la clave de seguridad:
+     ```bash
+     php artisan key:generate
+     ```
+
+4. **Preparar la base de datos**:
+   - Cree la base de datos en su gestor local (ej. `infinety_pizza`).
+   - Ejecute las migraciones y los seeders para cargar datos de prueba:
+     ```bash
+     php artisan migrate --seed
+     ```
+
+5. **Compilar Assets**:
+   Inicie el servidor de Vite para el frontend:
+   ```bash
+   npm run dev
+   ```
+
+6. **Acceso al Proyecto**:
+   - Si utiliza **Laragon**, el proyecto estará disponible en `http://infinety-pizza.test`.
+   - También puede usar el comando: `php artisan serve`.
+
+7. **Colas de Trabajo (Importante)**:
+   Para el envío de correos de confirmación en segundo plano, mantenga un proceso de colas activo:
+   ```bash
+   php artisan queue:work
+   ```
 
 ## Credenciales de Prueba (Admin)
 
-- **Usuario**: `admin@infinety.com`
-- **Contraseña**: `password` (o la definida en el seeder).
+- **Usuario**: `developer@mail.com`
+- **Contraseña**: `developer` (o la definida en el seeder).
 
 ## Uso de IA y Asistencia (Antigravity)
 
