@@ -57,10 +57,10 @@ class Index extends Component
 
         try {
             $order = $cartService->createOrder($orderData);
-            session()->flash('success', 'Order placed successfully! 🍕✨');
+            session()->flash('success', __('Order placed successfully!'));
             return redirect()->route('home');
         } catch (\Exception $e) {
-            session()->flash('error', 'Something went wrong while placing your order. Please try again.');
+            session()->flash('error', __('Something went wrong while placing your order. Please try again.'));
         }
     }
 

@@ -1,5 +1,7 @@
 <div
     x-data="cartDrawer({ items: @js($items), total: @js($total) })"
+    @pizza:add-to-cart.window="addItem($event.detail)"
+    @pizza:toggle-cart.window="toggle()"
     class="relative z-[100]"
 >
     <!-- Overlay -->
@@ -60,15 +62,15 @@
                         <div class="flex-1">
                             <div class="flex justify-between items-start mb-2">
                                 <h4 class="text-sm font-black text-gray-900 uppercase tracking-tight leading-tight" x-text="item.name"></h4>
-                                <button @click="remove(item.id)" class="text-gray-300 hover:text-primary transition-colors">
+                                <button @click="remove(item.id)" :disabled="loading" class="text-gray-300 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
                                     @svg('fas-trash-alt', ['class' => 'w-3 h-3'])
                                 </button>
                             </div>
                             <div class="flex items-center justify-between mt-4">
-                                <div class="flex items-center bg-white rounded-xl p-1 border border-gray-100 shadow-sm">
-                                    <button @click="decrease(item.id)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-brand-neutral font-bold transition-all">-</button>
+                                <div class="flex items-center bg-white rounded-xl p-1 border border-gray-100 shadow-sm" :class="{ 'opacity-50': loading }">
+                                    <button @click="decrease(item.id)" :disabled="loading" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-brand-neutral font-bold transition-all disabled:cursor-not-allowed">-</button>
                                     <span class="w-8 text-center font-black text-gray-900 text-xs" x-text="item.quantity"></span>
-                                    <button @click="increase(item.id)" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-brand-neutral font-bold transition-all">+</button>
+                                    <button @click="increase(item.id)" :disabled="loading" class="w-7 h-7 flex items-center justify-center rounded-lg hover:bg-brand-neutral font-bold transition-all disabled:cursor-not-allowed">+</button>
                                 </div>
                                 <span class="text-sm font-black text-primary italic" x-text="`${(item.price * item.quantity).toFixed(2)}€` "></span>
                             </div>
@@ -85,15 +87,28 @@
                     <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-1">{{ __('Order Summary') }}</p>
                     <p class="text-4xl font-black text-gray-900 font-heading tracking-tighter" x-text="`${total.toFixed(2)}€`"></p>
                 </div>
-                <div class="text-right">
-                    <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full">{{ __('FREE') }}</p>
+                <div class="text-right flex items-center gap-1">
+                    <p class="text-[9px] font-medium text-gray-400 uppercase tracking-[0.2em] mb-1">Delivery</p>
+                     <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full">{{ __('FREE') }}</p>
                 </div>
             </div>
 
             <template x-if="items.length > 0">
-                <a href="{{ route('checkout') }}" class="w-full bg-primary text-white py-5 rounded-[25px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-red-900/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 group">
-                    @svg('fas-shopping-bag', ['class' => 'w-4 h-4 group-hover:-translate-y-1 transition-transform'])
-                    {{ __('Go to Checkout') }}
+                <a href="{{ route('checkout') }}" 
+                   :class="{ 'opacity-50 pointer-events-none': loading }"
+                   class="w-full bg-primary text-white py-5 rounded-[25px] font-black text-sm uppercase tracking-[0.2em] shadow-2xl shadow-red-900/30 hover:scale-[1.02] active:scale-95 transition-all flex items-center justify-center gap-4 group">
+                    <template x-if="!loading">
+                        <div class="flex items-center gap-4">
+                            @svg('fas-shopping-bag', ['class' => 'w-4 h-4 group-hover:-translate-y-1 transition-transform'])
+                            {{ __('Go to Checkout') }}
+                        </div>
+                    </template>
+                    <template x-if="loading">
+                        <div class="flex items-center gap-2">
+                            <div class="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                            <span>{{ __('Processing...') }}</span>
+                        </div>
+                    </template>
                 </a>
             </template>
             

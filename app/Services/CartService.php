@@ -35,6 +35,7 @@ class CartService
      */
     public function addItem($pizzaId, $quantity = 1, $observations = null)
     {
+        $quantity = (int) ($quantity ?: 1);
         $cart = $this->getCart();
         $pizza = Pizza::findOrFail($pizzaId);
 
@@ -86,6 +87,51 @@ class CartService
         } else {
             $item->delete();
         }
+        $this->updateSession();
+    }
+
+    /**
+     * Merge the session cart into the user's database cart.
+     * Priority: Session items take precedence/are added to the DB.
+     */
+    public function mergeSessionCartToUser()
+    {
+        if (!Auth::check()) return;
+
+        $sessionCart = Session::get('cart', []);
+        if (empty($sessionCart)) {
+            $this->syncDbCart();
+            return;
+        }
+
+        $userCart = $this->getCart(); // This gets the user's DB cart since we're Auth::check()
+
+        foreach ($sessionCart as $item) {
+            // Find or create item in DB cart
+            $dbItem = $userCart->items()->where('pizza_id', $item['pizza_id'])
+                ->where('observations', $item['observations'])
+                ->first();
+
+            if ($dbItem) {
+                // If exists, update quantity (using session quantity as priority/addition)
+                // Here we'll just add them to be safe, or we could overwrite. 
+                // User said "priority is the one in session", so we ensure session items are represented.
+                $dbItem->update(['quantity' => $dbItem->quantity + $item['quantity']]);
+            } else {
+                // Create new item in DB
+                $userCart->items()->create([
+                    'pizza_id' => $item['pizza_id'],
+                    'quantity' => $item['quantity'],
+                    'observations' => $item['observations'],
+                    'price' => $item['price'],
+                ]);
+            }
+        }
+
+        // Clear the session cart specifically (it will be refreshed from DB next)
+        Session::forget('cart');
+        
+        // Final sync to update session with merged data
         $this->updateSession();
     }
 

@@ -27,7 +27,7 @@
             <!-- Right: Actions -->
             <div class="flex items-center space-x-4">
                 <!-- Cart (Desktop Only) -->
-                <button @click="$dispatch('toggle-cart')"
+                <button @click="$dispatch('pizza:toggle-cart')"
                     class="hidden cursor-pointer md:flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
                     @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
                     <span x-data="{ count: {{ count(Session::get('cart', [])) }} }"
@@ -67,7 +67,7 @@
                 </div>
 
                 <!-- Cart (Mobile Only) -->
-                <button @click="$dispatch('toggle-cart')"
+                <button @click="$dispatch('pizza:toggle-cart')"
                     class="md:hidden flex text-gray-700 hover:text-brand-primary transition-colors relative p-2">
                     @svg('fas-shopping-cart', ['class' => 'w-5 h-5'])
                     <span x-data="{ count: {{ count(Session::get('cart', [])) }} }"

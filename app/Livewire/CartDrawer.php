@@ -16,7 +16,6 @@ class CartDrawer extends Component
         $this->refreshCart($cartService);
     }
 
-    #[On('add-to-cart')]
     public function addItem(CartService $cartService, $pizzaId, $quantity = 1, $observations = null)
     {
         $cartService->addItem($pizzaId, $quantity, $observations);

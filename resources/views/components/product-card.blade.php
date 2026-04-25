@@ -20,7 +20,7 @@
         <p class="text-gray-400 text-xs line-clamp-2 leading-relaxed mb-4">
             {{ $pizza->description }}
         </p>
-        <x-ui.button variant="outline" fullWidth @click="$dispatch('add-to-cart', { 
+        <x-ui.button variant="outline" fullWidth @click="$dispatch('pizza:add-to-cart', { 
             pizzaId: {{ $pizza->id }}, 
             name: '{{ $pizza->name }}', 
             price: {{ $pizza->price }}, 

@@ -21,7 +21,15 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\LoginResponse::class,
+            \App\Http\Responses\LoginResponse::class
+        );
+
+        $this->app->singleton(
+            \Laravel\Fortify\Contracts\RegisterResponse::class,
+            \App\Http\Responses\RegisterResponse::class
+        );
     }
 
     /**
@@ -60,11 +68,14 @@ class FortifyServiceProvider extends ServiceProvider
         RateLimiter::for('two-factor', function (Request $request) {
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
-        // Cart Sync on Login
+        // Cart Sync on Login/Register
         \Illuminate\Support\Facades\Event::listen(
-            \Illuminate\Auth\Events\Login::class,
+            [
+                \Illuminate\Auth\Events\Login::class,
+                \Illuminate\Auth\Events\Registered::class,
+            ],
             function ($event) {
-                app(\App\Services\CartService::class)->syncDbCart();
+                app(\App\Services\CartService::class)->mergeSessionCartToUser();
             }
         );
     }

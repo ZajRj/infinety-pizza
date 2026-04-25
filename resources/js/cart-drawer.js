@@ -1,19 +1,24 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('cartDrawer', (initialData) => ({
         open: false,
+        loading: false,
         items: initialData.items || [],
-        total: initialData.total || 0,
+        total: parseFloat(initialData.total) || 0,
 
         init() {
-            // Listen for global add-to-cart events
-            window.addEventListener('add-to-cart', (event) => {
-                this.addItem(event.detail);
+            // Watch for Livewire updates to sync state
+            this.$watch('$wire.items', (value) => {
+                this.items = value || [];
+                this.updateTotal();
             });
 
-            // Listen for global toggle-cart events
-            window.addEventListener('toggle-cart', () => {
-                this.toggle();
+            this.$watch('$wire.total', (value) => {
+                const parsed = parseFloat(value);
+                this.total = isNaN(parsed) ? 0 : parsed;
             });
+            
+            // Final check on init
+            if (isNaN(this.total)) this.total = 0;
         },
 
         toggle() {
@@ -21,23 +26,39 @@ document.addEventListener('alpine:init', () => {
         },
 
         updateTotal() {
-            this.total = this.items.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            if (!this.items || this.items.length === 0) {
+                this.total = 0;
+                return;
+            }
+
+            const calculated = this.items.reduce((acc, item) => {
+                const price = parseFloat(item.price) || 0;
+                const quantity = parseInt(item.quantity) || 0;
+                return acc + (price * quantity);
+            }, 0);
+
+            this.total = isNaN(calculated) ? 0 : calculated;
         },
 
-        addItem(detail) {
+        async addItem(detail) {
+            if (this.loading) return;
+            this.loading = true;
+
+            const qty = parseInt(detail.quantity) || 1;
             let existingItem = this.items.find(i => i.pizza_id === detail.pizzaId);
             
+            // Optimistic update
             if (existingItem) {
-                existingItem.quantity += detail.quantity;
+                existingItem.quantity += qty;
             } else {
                 this.items.push({
                     id: 'temp-' + Date.now(),
                     pizza_id: detail.pizzaId,
                     name: detail.name,
-                    price: detail.price,
+                    price: parseFloat(detail.price) || 0,
                     image: detail.image,
-                    quantity: detail.quantity,
-                    subtotal: detail.price * detail.quantity
+                    quantity: qty,
+                    subtotal: (parseFloat(detail.price) || 0) * qty
                 });
             }
             
@@ -45,51 +66,89 @@ document.addEventListener('alpine:init', () => {
             this.open = true;
 
             // Sync with backend
-            this.$wire.addItem(detail.pizzaId, detail.quantity);
+            try {
+                await this.$wire.addItem(detail.pizzaId, qty);
+                this.items = this.$wire.items || [];
+                const backendTotal = parseFloat(this.$wire.total);
+                this.total = isNaN(backendTotal) ? 0 : backendTotal;
+            } catch (e) {
+                console.error("Cart sync error:", e);
+            } finally {
+                this.loading = false;
+            }
         },
 
-        increase(id) {
+        async increase(id) {
+            if (this.loading) return;
+            this.loading = true;
+
             let item = this.items.find(i => i.id === id);
             if (item) {
                 item.quantity++;
                 this.updateTotal();
                 
-                if (typeof id === 'string' && id.startsWith('temp-')) {
-                    this.$wire.addItem(item.pizza_id, 1);
-                } else {
-                    this.$wire.increase(id);
+                try {
+                    if (typeof id === 'string' && id.startsWith('temp-')) {
+                        await this.$wire.addItem(item.pizza_id, 1);
+                    } else {
+                        await this.$wire.increase(id);
+                    }
+                    this.items = this.$wire.items || [];
+                    const backendTotal = parseFloat(this.$wire.total);
+                    this.total = isNaN(backendTotal) ? 0 : backendTotal;
+                } finally {
+                    this.loading = false;
                 }
+            } else {
+                this.loading = false;
             }
         },
 
-        decrease(id) {
+        async decrease(id) {
+            if (this.loading) return;
+            this.loading = true;
+
             let item = this.items.find(i => i.id === id);
             if (item) {
                 if (item.quantity > 1) {
                     item.quantity--;
                     this.updateTotal();
                     
-                    if (typeof id === 'string' && id.startsWith('temp-')) {
-                        // For temp items, we just add -1
-                        this.$wire.addItem(item.pizza_id, -1);
-                    } else {
-                        this.$wire.decrease(id);
+                    try {
+                        if (typeof id === 'string' && id.startsWith('temp-')) {
+                            await this.$wire.addItem(item.pizza_id, -1);
+                        } else {
+                            await this.$wire.decrease(id);
+                        }
+                        this.items = this.$wire.items || [];
+                        const backendTotal = parseFloat(this.$wire.total);
+                        this.total = isNaN(backendTotal) ? 0 : backendTotal;
+                    } finally {
+                        this.loading = false;
                     }
                 } else {
-                    this.remove(id);
+                    await this.remove(id);
+                    this.loading = false;
                 }
+            } else {
+                this.loading = false;
             }
         },
 
-        remove(id) {
+        async remove(id) {
+            if (this.loading) return;
+            this.loading = true;
+
             this.items = this.items.filter(i => i.id !== id);
             this.updateTotal();
             
-            if (typeof id === 'string' && id.startsWith('temp-')) {
-                // Sync with backend using the pizza_id if needed
-                this.$wire.removeItem(id);
-            } else {
-                this.$wire.removeItem(id);
+            try {
+                await this.$wire.removeItem(id);
+                this.items = this.$wire.items || [];
+                const backendTotal = parseFloat(this.$wire.total);
+                this.total = isNaN(backendTotal) ? 0 : backendTotal;
+            } finally {
+                this.loading = false;
             }
         }
     }));

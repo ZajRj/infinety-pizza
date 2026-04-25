@@ -77,7 +77,7 @@
                                     </div>
                                     <div class="flex-1 w-full">
                                         <x-ui.button variant="primary" icon="fas-shopping-basket" fullWidth class="group" 
-                                            @click="$dispatch('add-to-cart', { 
+                                            @click="$dispatch('pizza:add-to-cart', { 
                                                 pizzaId: {{ $pizza->id }}, 
                                                 quantity: qty,
                                                 name: '{{ $pizza->name }}', 

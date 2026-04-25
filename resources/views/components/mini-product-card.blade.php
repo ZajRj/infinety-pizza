@@ -25,7 +25,7 @@
                 <span x-text="qty" class="w-6 text-center text-[10px] font-bold text-gray-900">1</span>
                 <button @click="qty++" class="px-1.5 hover:bg-gray-50 text-gray-400 text-xs font-bold">+</button>
             </div>
-            <x-ui.button variant="secondary" size="sm" class="flex-1 rounded-lg" @click="$dispatch('add-to-cart', { 
+            <x-ui.button variant="secondary" size="sm" class="flex-1 rounded-lg" @click="$dispatch('pizza:add-to-cart', { 
                 pizzaId: {{ $pizza->id }}, 
                 quantity: qty,
                 name: '{{ $pizza->name }}', 
