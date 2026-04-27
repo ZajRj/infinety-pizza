@@ -110,10 +110,10 @@ Para ejecutar este proyecto en un entorno local (como **Laragon**, **XAMPP** o s
    - Se recomienda el uso de **Mailpit** para interceptar correos localmente (`MAIL_MAILER=smtp`).
    - Como alternativa, puede configurar `MAIL_MAILER=log` en su archivo `.env` para redirigir todos los correos al archivo de logs (`storage/logs/laravel.log`).
 
-## Credenciales de Prueba (Admin)
+## Credenciales de Prueba
 
 - **Usuario**: `developer@mail.com`
-- **Contraseña**: `developer` (o la definida en el seeder).
+- **Contraseña**: `developer`
 
 ## Uso de IA y Asistencia (Antigravity)
 
