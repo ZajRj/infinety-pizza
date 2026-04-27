@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
                 'dni' => '00000000X',
                 'password' => Hash::make('developer'),
                 'is_admin' => true,
+                'email_verified_at'=>now()
             ]);
         }
 
