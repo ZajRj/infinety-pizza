@@ -138,5 +138,8 @@
     "This category still has associated ingredients. Please reassign or delete them first.": "Esta categoría todavía tiene ingredientes asociados. Por favor, reasígnalas o elimínalas primero.",
     "Cannot delete ingredient": "No se puede eliminar el ingrediente",
     "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "Este ingrediente todavía se está usando en una o más pizzas. Por favor, elimínalo de las pizzas primero.",
-    "Operation Blocked": "Operación Bloqueada"
+    "Operation Blocked": "Operación Bloqueada",
+    "Please provide a delivery address.":"Por favor, proporciona una dirección de envío",
+    "Special instructions are too long (max 500 characters)":"Instrucciones especiales muy largas (max 500 caracteres)"
+
 }

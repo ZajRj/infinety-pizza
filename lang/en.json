@@ -135,5 +135,9 @@
     "Cannot delete ingredient category": "Cannot delete ingredient category",
     "This category still has associated ingredients. Please reassign or delete them first.": "This category still has associated ingredients. Please reassign or delete them first.",
     "Cannot delete ingredient": "Cannot delete ingredient",
-    "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first."
+    "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.",
+    "Please provide a delivery address.":"Please provide a delivery address.",
+    "Special instructions are too long (max 500 characters)":"Special instructions are too long (max 500 characters)"
+
+
 }
