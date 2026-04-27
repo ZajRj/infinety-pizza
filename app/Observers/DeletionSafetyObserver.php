@@ -17,8 +17,7 @@ class DeletionSafetyObserver
     {
         // 1. Protection for Pizza Categories
         if ($model instanceof Category && $model->pizzas()->exists()) {
-            $this->sendNotification(
-                __('Cannot delete category'),
+            $this->notify(
                 __('This category still has associated pizzas. Please reassign or delete them first.')
             );
             return false;
@@ -26,8 +25,7 @@ class DeletionSafetyObserver
 
         // 2. Protection for Ingredient Categories
         if ($model instanceof IngredientCategory && $model->ingredients()->exists()) {
-            $this->sendNotification(
-                __('Cannot delete ingredient category'),
+            $this->notify(
                 __('This category still has associated ingredients. Please reassign or delete them first.')
             );
             return false;
@@ -35,8 +33,7 @@ class DeletionSafetyObserver
 
         // 3. Protection for Ingredients
         if ($model instanceof Ingredient && $model->pizzas()->exists()) {
-            $this->sendNotification(
-                __('Cannot delete ingredient'),
+            $this->notify(
                 __('This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.')
             );
             return false;
@@ -45,13 +42,12 @@ class DeletionSafetyObserver
         return true;
     }
 
-    protected function sendNotification(string $title, string $body): void
+    protected function notify(string $message): void
     {
         Notification::make()
-            ->title($title)
-            ->body($body)
+            ->title(__('Operation Blocked'))
+            ->body($message)
             ->danger()
-            ->persistent()
             ->send();
     }
 }

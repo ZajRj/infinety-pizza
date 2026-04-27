@@ -137,5 +137,6 @@
     "Cannot delete ingredient category": "No se puede eliminar la categoría de ingredientes",
     "This category still has associated ingredients. Please reassign or delete them first.": "Esta categoría todavía tiene ingredientes asociados. Por favor, reasígnalas o elimínalas primero.",
     "Cannot delete ingredient": "No se puede eliminar el ingrediente",
-    "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "Este ingrediente todavía se está usando en una o más pizzas. Por favor, elimínalo de las pizzas primero."
+    "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "Este ingrediente todavía se está usando en una o más pizzas. Por favor, elimínalo de las pizzas primero.",
+    "Operation Blocked": "Operación Bloqueada"
 }

@@ -34,6 +34,7 @@ class IngredientSeeder extends Seeder
                 'Aceitunas Negras',
                 'Maíz',
                 'Piña',
+                'Albahaca',
             ],
             'Salsas' => [
                 'Tomate',

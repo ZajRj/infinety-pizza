@@ -29,7 +29,7 @@ class PizzaSeeder extends Seeder
             'images' => ['pizzas/margherita.png'],
         ]);
         $margherita->ingredients()->attach(
-            Ingredient::whereIn('name', ['Tomate', 'Mozzarella'])->pluck('id')
+            Ingredient::whereIn('name', ['Tomate', 'Mozzarella', 'Albahaca'])->pluck('id')
         );
 
         // 2. Pepperoni

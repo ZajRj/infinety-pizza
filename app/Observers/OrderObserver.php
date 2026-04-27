@@ -23,7 +23,7 @@ class OrderObserver
     public function updated(Order $order): void
     {
         // Check if the status was changed to cancelled
-        if ($order->isDirty('status') && $order->status === OrderStatus::CANCELLED) {
+        if ($order->wasChanged('status') && $order->status === OrderStatus::CANCELLED) {
             Log::warning("ORDER CANCELLED: Order #{$order->id} has been cancelled.");
             
             // Dispatch the specific cancellation event
