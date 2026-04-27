@@ -38,7 +38,7 @@
                 <div class="item-name">{{ $detail->quantity }}x {{ $detail->pizza_name }}</div>
                 @if($detail->pizza && $detail->pizza->ingredients->count() > 0)
                     <div class="ingredients">
-                        {{ __('Ingredients') }}: {{ $detail->pizza->ingredients->pluck('name')->implode(', ') }}
+                        {{ __('Ingredients') }}: {{ $detail->pizza->ingredients->map(fn($i) => __($i->name))->implode(', ') }}
                     </div>
                 @endif
                 @if($detail->observations)

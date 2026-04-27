@@ -17,6 +17,14 @@ class Index extends Component
         'notes' => 'nullable|string|max:500',
     ];
 
+    public function messages()
+    {
+        return [
+            'address.required' => __('Please provide a delivery address.'),
+            'notes.max' => __('Special instructions are too long (max 500 characters).'),
+        ];
+    }
+
     public function mount(CartService $cartService)
     {
         if (count($cartService->getItems()) === 0) {

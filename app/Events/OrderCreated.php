@@ -14,10 +14,15 @@ class OrderCreated
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public string $locale;
+
     /**
      * Create a new event instance.
      */
-    public function __construct(public \App\Models\Order $order){}
+    public function __construct(public \App\Models\Order $order)
+    {
+        $this->locale = app()->getLocale();
+    }
 
     /**
      * Get the channels the event should broadcast on.

@@ -88,7 +88,7 @@
                     <p class="text-4xl font-black text-gray-900 font-heading tracking-tighter" x-text="`${total.toFixed(2)}€`"></p>
                 </div>
                 <div class="text-right flex items-center gap-1">
-                    <p class="text-[9px] font-medium text-gray-400 uppercase tracking-[0.2em] mb-1">Delivery</p>
+                    <p class="text-[9px] font-medium text-gray-400 uppercase tracking-[0.2em] mb-1">{{ __('Delivery') }}</p>
                      <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest bg-emerald-500/10 px-3 py-1 rounded-full">{{ __('FREE') }}</p>
                 </div>
             </div>

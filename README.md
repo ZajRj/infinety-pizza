@@ -12,7 +12,7 @@ Este repositorio contiene la solución a la **Evaluación Técnica v2.0 de Infin
 - **Frontend**: Livewire 4, AlpineJS
 - **Panel Administrativo**: Filament v4
 - **Estilizado**: Tailwind CSS
-- **Colas y Notificaciones**: Database Queue Driver + SMTP (Log) Mailer.
+- **Colas y Notificaciones**: Database Queue Driver + Mailpit (o driver `log`) para la gestión de correos.
 - **Base de Datos**: MySQL (con soporte para Soft Deletes).
 
 ### Justificación de elección: Livewire
@@ -105,6 +105,10 @@ Para ejecutar este proyecto en un entorno local (como **Laragon**, **XAMPP** o s
    ```bash
    php artisan queue:work
    ```
+
+8. **Pruebas de Correo**:
+   - Se recomienda el uso de **Mailpit** para interceptar correos localmente (`MAIL_MAILER=smtp`).
+   - Como alternativa, puede configurar `MAIL_MAILER=log` en su archivo `.env` para redirigir todos los correos al archivo de logs (`storage/logs/laravel.log`).
 
 ## Credenciales de Prueba (Admin)
 

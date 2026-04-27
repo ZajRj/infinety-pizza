@@ -29,6 +29,7 @@ return [
     'statuses' => [
         'pending' => 'Pending',
         'confirmed' => 'Confirmed',
+        'completed' => 'Completed',
         'cancelled' => 'Cancelled',
     ],
 ];

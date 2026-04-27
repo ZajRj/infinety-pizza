@@ -12,10 +12,10 @@ enum OrderStatus: string
     public function label(): string
     {
         return match ($this) {
-            self::PENDING   => 'Pendiente',
-            self::CONFIRMED => 'Confirmada',
-            self::COMPLETED => 'Completada',
-            self::CANCELLED => 'Cancelada',
+            self::PENDING   => __('orders.statuses.pending'),
+            self::CONFIRMED => __('orders.statuses.confirmed'),
+            self::COMPLETED => __('orders.statuses.completed'),
+            self::CANCELLED => __('orders.statuses.cancelled'),
         };
     }
 }

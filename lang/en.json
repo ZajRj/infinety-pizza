@@ -9,6 +9,7 @@
     "Order Summary": "Order Summary",
     "Subtotal": "Subtotal",
     "Delivery Fee": "Delivery Fee",
+    "Delivery": "Delivery",
     "FREE": "FREE",
     "Total": "Total",
     "Delivery Address": "Delivery Address",
@@ -18,6 +19,10 @@
     "Place Order": "Place Order",
     "Processing...": "Processing...",
     "Order placed successfully!": "Order placed successfully!",
+    "Order Confirmed!": "Order Confirmed!",
+    "Your artisanal journey is being prepared. Our chefs are crafting your pizza with passion.": "Your artisanal journey is being prepared. Our chefs are crafting your pizza with passion.",
+    "View My Orders": "View My Orders",
+    "Back to Home": "Back to Home",
     "Something went wrong while placing your order. Please try again.": "Something went wrong while placing your order. Please try again.",
     "Your artisanal journey starts when you add a pizza!": "Your artisanal journey starts when you add a pizza!",
     "Cart is empty": "Cart is empty",
@@ -116,5 +121,13 @@
     "Made with ❤️ for pizza lovers.": "Made with ❤️ for pizza lovers.",
     "Bringing the taste of real artisanal pizza to your table. Fresh ingredients, sourdough, and lots of passion in every slice.": "Bringing the taste of real artisanal pizza to your table. Fresh ingredients, sourdough, and lots of passion in every slice.",
     "Chat with us": "Chat with us",
-    "Hola! Me gustaría ordenar una pizza artesanal.": "Hi! I'd like to order an artisanal pizza."
+    "Hola! Me gustaría ordenar una pizza artesanal.": "Hi! I'd like to order an artisanal pizza.",
+    "Order Confirmation": "Order Confirmation",
+    "Infinety Pizza - Order Confirmation #": "Infinety Pizza - Order Confirmation #",
+    "Hi": "Hi",
+    "Thank you for your order! We are currently preparing your artisanal pizza with passion.": "Thank you for your order! We are currently preparing your artisanal pizza with passion.",
+    "Date": "Date",
+    "Address": "Address",
+    "Order Details": "Order Details",
+    "Thank you for choosing Infinety Pizza - The Art of Dough.": "Thank you for choosing Infinety Pizza - The Art of Dough."
 }

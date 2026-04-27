@@ -27,7 +27,9 @@ class SendOrderConfirmationEmail implements ShouldQueue
         $order = $event->order;
         $customer = $order->user;
 
-        // Send the confirmation email
-        \Illuminate\Support\Facades\Mail::to($customer->email)->send(new \App\Mail\OrderConfirmation($order));
+        // Send the confirmation email with the correct locale
+        \Illuminate\Support\Facades\Mail::to($customer->email)
+            ->locale($event->locale)
+            ->send(new \App\Mail\OrderConfirmation($order));
     }
 }
