@@ -15,6 +15,7 @@
         x-transition:leave-end="opacity-0"
         @click="open = false" 
         class="fixed inset-0 bg-black/40 backdrop-blur-sm"
+        x-cloak
     ></div>
 
     <!-- Drawer Panel -->

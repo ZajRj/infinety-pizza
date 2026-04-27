@@ -29,13 +29,16 @@ class Menu extends Component
 
     public function render()
     {
+        // Get current menu cache version (invalidated when pizzas/categories/ingredients change)
+        $menuVersion = Cache::rememberForever('menu_cache_version', fn() => time());
+
         // Cache categories for 1 hour
-        $categories = Cache::remember('menu_categories', 3600, function () {
+        $categories = Cache::remember("menu_categories_v{$menuVersion}", 3600, function () {
             return Category::all();
         });
 
         // Cache pizzas based on category and page for 1 hour
-        $cacheKey = "menu_pizzas_cat_{$this->categoryId}_page_" . $this->getPage();
+        $cacheKey = "menu_pizzas_cat_{$this->categoryId}_page_" . $this->getPage() . "_v{$menuVersion}";
         
         $pizzas = Cache::remember($cacheKey, 3600, function () {
             $query = Pizza::query()->with('category');

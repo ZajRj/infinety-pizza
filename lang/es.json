@@ -95,6 +95,8 @@
     "View All": "Ver Todos",
     "Order": "Pedido",
     "Amount": "Total",
+    "Order Items":"Artículos",
+    "Delivery Details":"Detalles de envío",
     "No orders yet": "Sin pedidos aún",
     "Your pizza journey starts here. Explore our menu!": "Tu viaje pizzero comienza aquí. ¡Explora nuestra carta!",
     "Quick Add": "Añadir Rápido",
@@ -129,5 +131,11 @@
     "Made with ❤️ for pizza lovers.": "Hecho con ❤️ para amantes de la pizza.",
     "Bringing the taste of real artisanal pizza to your table. Fresh ingredients, sourdough, and lots of passion in every slice.": "Llevamos el sabor de la verdadera pizza artesanal a tu mesa. Ingredientes frescos, masa madre y mucha pasión en cada rebanada.",
     "Chat with us": "Chatea con nosotros",
-    "Hola! Me gustaría ordenar una pizza artesanal.": "¡Hola! Me gustaría ordenar una pizza artesanal."
+    "Hola! Me gustaría ordenar una pizza artesanal.": "¡Hola! Me gustaría ordenar una pizza artesanal.",
+    "Cannot delete category": "No se puede eliminar la categoría",
+    "This category still has associated pizzas. Please reassign or delete them first.": "Esta categoría todavía tiene pizzas asociadas. Por favor, reasígnalas o elimínalas primero.",
+    "Cannot delete ingredient category": "No se puede eliminar la categoría de ingredientes",
+    "This category still has associated ingredients. Please reassign or delete them first.": "Esta categoría todavía tiene ingredientes asociados. Por favor, reasígnalas o elimínalas primero.",
+    "Cannot delete ingredient": "No se puede eliminar el ingrediente",
+    "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "Este ingrediente todavía se está usando en una o más pizzas. Por favor, elimínalo de las pizzas primero."
 }

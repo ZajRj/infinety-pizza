@@ -4,7 +4,9 @@ namespace App\Filament\Resources\Ingredients\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ActionGroup;
 use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
@@ -34,7 +36,7 @@ class IngredientsTable
                     ->badge()
                     ->color('info'),
 
-                TextColumn::make('created_atp')
+                TextColumn::make('created_at')
                     ->label(__('generic.fields.created_at'))
                     ->dateTime()
                     ->sortable()
@@ -49,10 +51,13 @@ class IngredientsTable
             ->filters([
                 //
             ])
-            ->recordActions([
-                EditAction::make(),
+            ->actions([
+                ActionGroup::make([
+                    EditAction::make(),
+                    DeleteAction::make(),
+                ]),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

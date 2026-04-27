@@ -93,7 +93,7 @@ class Index extends Component
 
     public function render()
     {
-        $ordersQuery = $this->user->orders()->latest();
+        $ordersQuery = $this->user->orders()->with('orderDetails')->latest();
 
         $orders = $this->showAllOrders 
             ? $ordersQuery->paginate(10) 

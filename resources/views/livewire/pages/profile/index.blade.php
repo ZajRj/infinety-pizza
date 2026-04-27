@@ -126,7 +126,7 @@
                     
                     <div class="space-y-6">
                         @forelse($orders as $order)
-                            <div class="bg-white rounded-[40px] p-8 border border-gray-100 shadow-xl shadow-gray-200/20 group hover:border-primary/20 transition-all">
+                            <div x-data="{ expanded: false }" class="bg-white rounded-[40px] p-8 border border-gray-100 shadow-xl shadow-gray-200/20 group hover:border-primary/20 transition-all overflow-hidden">
                                 <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
                                     <div class="flex items-center gap-6">
                                         <div class="w-16 h-16 bg-brand-neutral rounded-2xl flex items-center justify-center text-primary border border-gray-50 group-hover:scale-110 transition-transform">
@@ -149,9 +149,84 @@
                                             <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest">{{ __('Amount') }}</p>
                                             <p class="text-xl font-black text-primary italic leading-none">{{ number_format($order->total, 2) }}€</p>
                                         </div>
-                                        <button class="bg-brand-neutral p-4 rounded-2xl text-gray-900 hover:bg-primary hover:text-white transition-all shadow-sm">
-                                            @svg('fas-chevron-right', ['class' => 'w-4 h-4'])
+                                        <button 
+                                            @click="expanded = !expanded" 
+                                            :class="expanded ? 'bg-primary text-white' : 'bg-brand-neutral text-gray-900'"
+                                            class="p-4 rounded-2xl transition-all shadow-sm hover:scale-105 active:scale-95"
+                                        >
+                                            <div :class="expanded ? 'rotate-90' : ''" class="transition-transform duration-300">
+                                                @svg('fas-chevron-right', ['class' => 'w-4 h-4'])
+                                            </div>
                                         </button>
+                                    </div>
+                                </div>
+
+                                <!-- Expanded Content -->
+                                <div x-show="expanded" 
+                                     x-transition:enter="transition ease-out duration-300"
+                                     x-transition:enter-start="opacity-0 -translate-y-4"
+                                     x-transition:enter-end="opacity-100 translate-y-0"
+                                     class="mt-8 pt-8 border-t border-gray-50"
+                                     x-cloak
+                                >
+                                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                        <!-- Items List -->
+                                        <div>
+                                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                                @svg('fas-pizza-slice', ['class' => 'w-3 h-3'])
+                                                {{ __('Order Items') }}
+                                            </h4>
+                                            <div class="space-y-4">
+                                                @foreach($order->orderDetails as $detail)
+                                                    <div class="flex items-center justify-between p-4 bg-brand-neutral/40 rounded-2xl border border-gray-50 group/item hover:bg-white hover:shadow-md transition-all">
+                                                        <div class="flex items-center gap-4">
+                                                            <div class="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-primary font-black text-xs shadow-sm border border-gray-100">
+                                                                {{ $detail->quantity }}x
+                                                            </div>
+                                                            <div>
+                                                                <p class="text-sm font-black text-gray-900 uppercase tracking-tight">{{ $detail->pizza_name }}</p>
+                                                                @if($detail->observations)
+                                                                    <p class="text-[9px] text-gray-400 font-medium italic mt-0.5">{{ $detail->observations }}</p>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <p class="text-sm font-black text-gray-900 italic">{{ number_format($detail->price * $detail->quantity, 2) }}€</p>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+
+                                        <!-- Delivery Info -->
+                                        <div>
+                                            <h4 class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                                                @svg('fas-truck', ['class' => 'w-3 h-3'])
+                                                {{ __('Delivery Details') }}
+                                            </h4>
+                                            <div class="bg-brand-neutral/40 rounded-[32px] p-8 border border-gray-50">
+                                                <div class="space-y-6">
+                                                    <div class="flex gap-4">
+                                                        <div class="w-8 h-8 bg-white rounded-xl flex items-center justify-center text-primary opacity-50 shadow-sm border border-gray-50 flex-shrink-0">
+                                                            @svg('fas-map-marker-alt', ['class' => 'w-3 h-3'])
+                                                        </div>
+                                                        <div>
+                                                            <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">{{ __('Address') }}</p>
+                                                            <p class="text-xs font-bold text-gray-700 leading-relaxed">{{ $order->delivery_address }}</p>
+                                                        </div>
+                                                    </div>
+                                                    @if($order->notes)
+                                                        <div class="flex gap-4">
+                                                            <div class="w-8 h-8 bg-white rounded-xl flex items-center justify-center text-primary opacity-50 shadow-sm border border-gray-50 flex-shrink-0">
+                                                                @svg('fas-sticky-note', ['class' => 'w-3 h-3'])
+                                                            </div>
+                                                            <div>
+                                                                <p class="text-[9px] font-black text-gray-300 uppercase tracking-widest mb-1">{{ __('Special Instructions') }}</p>
+                                                                <p class="text-xs font-medium text-gray-500 italic">{{ $order->notes }}</p>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
