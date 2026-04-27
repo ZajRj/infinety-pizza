@@ -137,7 +137,9 @@
     "Cannot delete ingredient": "Cannot delete ingredient",
     "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.",
     "Please provide a delivery address.":"Please provide a delivery address.",
-    "Special instructions are too long (max 500 characters)":"Special instructions are too long (max 500 characters)"
-
-
+    "Special instructions are too long (max 500 characters)":"Special instructions are too long (max 500 characters)",
+    "There was an error loading the menu. Please try again.": "There was an error loading the menu. Please try again.",
+    "There was an error loading your profile data. Please try again.": "There was an error loading your profile data. Please try again.",
+    "Something went wrong while placing your order. Please try again.": "Something went wrong while placing your order. Please try again.",
+    "There was an error loading your selection. Please try again.": "There was an error loading your selection. Please try again."
 }

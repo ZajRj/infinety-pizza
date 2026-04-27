@@ -58,6 +58,7 @@ class Index extends Component
     {
         $this->validate();
 
+
         $orderData = [
             'delivery_address' => $this->address,
             'notes' => $this->notes,
@@ -68,16 +69,26 @@ class Index extends Component
             session()->flash('success', __('Order placed successfully!'));
             return redirect()->route('home');
         } catch (\Exception $e) {
-            session()->flash('error', __('Something went wrong while placing your order. Please try again.'));
+            $this->dispatch('notify', message: __('Something went wrong while placing your order. Please try again.'), type: 'error');
         }
     }
 
     #[Layout('layouts.app')]
     public function render(CartService $cartService)
     {
-        return view('livewire.pages.checkout.index', [
-            'items' => collect($cartService->getItems()),
-            'total' => $cartService->getTotal(),
-        ]);
+        try {
+            return view('livewire.pages.checkout.index', [
+                'items' => collect($cartService->getItems()),
+                'total' => $cartService->getTotal()
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Checkout Component Error: " . $e->getMessage());
+            $this->dispatch('notify', message: __('There was an error loading your selection. Please try again.'), type: 'error');
+
+            return view('livewire.pages.checkout.index', [
+                'items' => collect(),
+                'total' => 0
+            ]);
+        }
     }
 }

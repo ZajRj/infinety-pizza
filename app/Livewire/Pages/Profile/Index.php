@@ -93,14 +93,23 @@ class Index extends Component
 
     public function render()
     {
-        $ordersQuery = $this->user->orders()->with('orderDetails')->latest();
+        try {
+            $ordersQuery = $this->user->orders()->with('orderDetails')->latest();
 
-        $orders = $this->showAllOrders 
-            ? $ordersQuery->paginate(10) 
-            : $ordersQuery->take(5)->get();
+            $orders = $this->showAllOrders 
+                ? $ordersQuery->paginate(10) 
+                : $ordersQuery->take(5)->get();
 
-        return view('livewire.pages.profile.index', [
-            'orders' => $orders
-        ]);
+            return view('livewire.pages.profile.index', [
+                'orders' => $orders
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Profile Component Error: " . $e->getMessage());
+            $this->dispatch('notify', message: __('There was an error loading your profile data. Please try again.'), type: 'error');
+            
+            return view('livewire.pages.profile.index', [
+                'orders' => collect()
+            ]);
+        }
     }
 }

@@ -29,30 +29,40 @@ class Menu extends Component
 
     public function render()
     {
-        // Get current menu cache version (invalidated when pizzas/categories/ingredients change)
-        $menuVersion = Cache::rememberForever('menu_cache_version', fn() => time());
+        try {
+            // Get current menu cache version (invalidated when pizzas/categories/ingredients change)
+            $menuVersion = Cache::rememberForever('menu_cache_version', fn() => time());
 
-        // Cache categories for 1 hour
-        $categories = Cache::remember("menu_categories_v{$menuVersion}", 3600, function () {
-            return Category::all();
-        });
+            // Cache categories for 1 hour
+            $categories = Cache::remember("menu_categories_v{$menuVersion}", 3600, function () {
+                return Category::all();
+            });
 
-        // Cache pizzas based on category and page for 1 hour
-        $cacheKey = "menu_pizzas_cat_{$this->categoryId}_page_" . $this->getPage() . "_v{$menuVersion}";
-        
-        $pizzas = Cache::remember($cacheKey, 3600, function () {
-            $query = Pizza::query()->with('category');
+            // Cache pizzas based on category and page for 1 hour
+            $cacheKey = "menu_pizzas_cat_{$this->categoryId}_page_" . $this->getPage() . "_v{$menuVersion}";
+            
+            $pizzas = Cache::remember($cacheKey, 3600, function () {
+                $query = Pizza::query()->with('category');
 
-            if ($this->categoryId) {
-                $query->where('category_id', $this->categoryId);
-            }
+                if ($this->categoryId) {
+                    $query->where('category_id', $this->categoryId);
+                }
 
-            return $query->latest()->paginate(6);
-        });
+                return $query->latest()->paginate(6);
+            });
 
-        return view('livewire.home.menu', [
-            'categories' => $categories,
-            'pizzas' => $pizzas
-        ]);
+            return view('livewire.home.menu', [
+                'categories' => $categories,
+                'pizzas' => $pizzas
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Menu Component Error: " . $e->getMessage());
+            $this->dispatch('notify', message: __('There was an error loading the menu. Please try again.'), type: 'error');
+
+            return view('livewire.home.menu', [
+                'categories' => collect(),
+                'pizzas' => new \Illuminate\Pagination\LengthAwarePaginator([], 0, 6)
+            ]);
+        }
     }
 }

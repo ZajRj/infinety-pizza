@@ -36,6 +36,9 @@
         <x-ui.alert type="info" :message="session('info')" />
     @endif
 
+    <!-- Global Alert Listener -->
+    <x-ui.alert type="success" :message="null" />
+
     <x-navigation />
 
     <livewire:cart-drawer />

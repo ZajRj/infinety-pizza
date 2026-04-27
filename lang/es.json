@@ -140,6 +140,9 @@
     "This ingredient is still being used in one or more pizzas. Please remove it from the pizzas first.": "Este ingrediente todavía se está usando en una o más pizzas. Por favor, elimínalo de las pizzas primero.",
     "Operation Blocked": "Operación Bloqueada",
     "Please provide a delivery address.":"Por favor, proporciona una dirección de envío",
-    "Special instructions are too long (max 500 characters)":"Instrucciones especiales muy largas (max 500 caracteres)"
-
+    "Special instructions are too long (max 500 characters)":"Instrucciones especiales muy largas (max 500 caracteres)",
+    "There was an error loading the menu. Please try again.": "Hubo un error al cargar el menú. Por favor, inténtalo de nuevo.",
+    "There was an error loading your profile data. Please try again.": "Hubo un error al cargar los datos de tu perfil. Por favor, inténtalo de nuevo.",
+    "Something went wrong while placing your order. Please try again.": "Algo salió mal al realizar tu pedido. Por favor, inténtalo de nuevo.",
+    "There was an error loading your selection. Please try again.": "Hubo un error al cargar tu selección. Por favor, inténtalo de nuevo."
 }

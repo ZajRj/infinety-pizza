@@ -13,35 +13,43 @@ class OrderService
      */
     public function createOrder(array $data): Order
     {
-        return DB::transaction(function () use ($data) {
-            // 1. Create the Order
-            $order = Order::create([
-                'user_id' => $data['user_id'],
-                'delivery_address' => $data['delivery_address'] ?? null,
-                'notes' => $data['notes'] ?? null,
-                'status' => $data['status'],
-                'total' => $this->calculateTotal($data['orderDetails'] ?? []),
-            ]);
+        try {
+            return DB::transaction(function () use ($data) {
+                // 1. Create the Order
+                $order = Order::create([
+                    'user_id' => $data['user_id'],
+                    'delivery_address' => $data['delivery_address'] ?? null,
+                    'notes' => $data['notes'] ?? null,
+                    'status' => $data['status'],
+                    'total' => $this->calculateTotal($data['orderDetails'] ?? []),
+                ]);
 
-            // 2. Create Order Details
-            if (!empty($data['orderDetails'])) {
-                foreach ($data['orderDetails'] as $item) {
-                    $pizza = Pizza::find($item['pizza_id']);
-                    $order->orderDetails()->create([
-                        'pizza_id' => $item['pizza_id'],
-                        'pizza_name' => $pizza?->name ?? 'Unknown Pizza',
-                        'price' => $item['price'] ?? $pizza?->price ?? 0,
-                        'quantity' => $item['quantity'] ?? 1,
-                        'observations' => $item['observations'] ?? null,
-                    ]);
+                // 2. Create Order Details
+                if (!empty($data['orderDetails'])) {
+                    foreach ($data['orderDetails'] as $item) {
+                        $pizza = Pizza::find($item['pizza_id']);
+                        $order->orderDetails()->create([
+                            'pizza_id' => $item['pizza_id'],
+                            'pizza_name' => $pizza?->name ?? 'Unknown Pizza',
+                            'price' => $item['price'] ?? $pizza?->price ?? 0,
+                            'quantity' => $item['quantity'] ?? 1,
+                            'observations' => $item['observations'] ?? null,
+                        ]);
+                    }
                 }
-            }
 
-            $order = $order->load(['orderDetails.pizza.ingredients', 'user']);
-            event(new \App\Events\OrderCreated($order));
+                $order = $order->load(['orderDetails.pizza.ingredients', 'user']);
+                event(new \App\Events\OrderCreated($order));
 
-            return $order;
-        });
+                return $order;
+            });
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("Failed to create order: " . $e->getMessage(), [
+                'data' => $data,
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw $e;
+        }
     }
 
     /**

@@ -198,36 +198,41 @@ class CartService
      */
     public function createOrder(array $options = [])
     {
-        $cart = $this->getCart();
-        
-        if ($cart->items->isEmpty()) {
-            throw new \Exception("Cannot create an order from an empty cart.");
-        }
+        try {
+            $cart = $this->getCart();
+            
+            if ($cart->items->isEmpty()) {
+                throw new \Exception("Cannot create an order from an empty cart.");
+            }
 
-        $orderDetails = $cart->items->map(function ($item) {
-            return [
-                'pizza_id' => $item->pizza_id,
-                'price' => $item->price,
-                'quantity' => $item->quantity,
-                'observations' => $item['observations'] ?? null,
+            $orderDetails = $cart->items->map(function ($item) {
+                return [
+                    'pizza_id' => $item->pizza_id,
+                    'price' => $item->price,
+                    'quantity' => $item->quantity,
+                    'observations' => $item['observations'] ?? null,
+                ];
+            })->toArray();
+
+            $orderData = [
+                'user_id' => Auth::id(),
+                'delivery_address' => $options['delivery_address'] ?? Auth::user()->address,
+                'notes' => $options['notes'] ?? null,
+                'status' => \App\OrderStatus::PENDING,
+                'orderDetails' => $orderDetails,
             ];
-        })->toArray();
 
-        $orderData = [
-            'user_id' => Auth::id(),
-            'delivery_address' => $options['delivery_address'] ?? Auth::user()->address,
-            'notes' => $options['notes'] ?? null,
-            'status' => \App\OrderStatus::PENDING,
-            'orderDetails' => $orderDetails,
-        ];
+            $order = $this->orderService->createOrder($orderData);
 
-        $order = $this->orderService->createOrder($orderData);
+            // Clear cart after order
+            $cart->items()->delete();
+            $this->updateSession();
 
-        // Clear cart after order
-        $cart->items()->delete();
-        $this->updateSession();
-
-        return $order;
+            return $order;
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error("CartService: Failed to process order: " . $e->getMessage());
+            throw $e;
+        }
     }
 
     /**
